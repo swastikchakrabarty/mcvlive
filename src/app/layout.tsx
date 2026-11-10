@@ -6,7 +6,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#F4ECE1",
+  themeColor: "#0A0A0C",
 };
 
 export const metadata: Metadata = {
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen bg-[#F4ECE1] text-[#0A0A0A] antialiased selection:bg-[#C5A880] selection:text-white">
+    <html lang="en" className="dark scroll-smooth">
+      <body className="min-h-screen bg-[#0A0A0C] text-white antialiased selection:bg-[#E6C594] selection:text-black">
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

@@ -239,13 +239,13 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
     });
   });
 
-  describe("Fear of God Luxury Aesthetic & Glassmorphism in CSS", () => {
-    it("defines luxury sober white base, champagne gold accents, and ambient lighting utilities", () => {
+  describe("Dynamic Luxury Dark & Luminous Aesthetic & Glassmorphism in CSS", () => {
+    it("defines dynamic luxury obsidian dark base, champagne gold accents, and ambient lighting utilities", () => {
       const cssPath = path.resolve(process.cwd(), "src/app/globals.css");
       const cssContent = fs.readFileSync(cssPath, "utf-8");
 
-      expect(cssContent).toContain("--luxury-base: #f4ece1");
-      expect(cssContent).toContain("--luxury-champagne: #c5a880");
+      expect(cssContent).toContain("--luxury-base: #0a0a0c");
+      expect(cssContent).toContain("--luxury-gold: #e6c594");
       expect(cssContent).toContain(".luxury-glass");
       expect(cssContent).toContain(".ambient-hero-glow");
       expect(cssContent).toContain(".ambient-footer-glow");

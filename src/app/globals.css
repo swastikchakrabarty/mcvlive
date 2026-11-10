@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  /* Fear of God / Luxury Palette Tokens - Rich Champagne Hue */
-  --luxury-base: #f4ece1;
-  --luxury-surface: rgba(255, 255, 255, 0.6);
-  --luxury-surface-elevated: rgba(255, 255, 255, 0.75);
-  --luxury-champagne: #c5a880;
-  --luxury-gold-border: rgba(212, 175, 55, 0.3);
-  --luxury-border-subtle: rgba(212, 175, 55, 0.2);
-  --luxury-text-primary: #0a0a0a;
-  --luxury-text-secondary: #525252;
-  --luxury-text-muted: #828282;
-  --luxury-gold-glow: rgba(212, 175, 55, 0.16);
+  /* Dynamic Luxury Dark & Luminous Base Tokens */
+  --luxury-base: #0a0a0c;
+  --luxury-surface: #121216;
+  --luxury-surface-elevated: #181820;
+  --luxury-gold: #e6c594;
+  --luxury-gold-light: #f3d5a0;
+  --luxury-gold-border: rgba(230, 197, 148, 0.4);
+  --luxury-gold-glow: rgba(230, 197, 148, 0.15);
+  --luxury-text-primary: #ffffff;
+  --luxury-text-secondary: #a0a0b0;
+  --luxury-text-muted: #6e6e80;
 
   /* Layer 5/6 Tokens preserved for compatibility */
   --bg-dominant: #090d16;
@@ -31,8 +31,8 @@
 }
 
 body {
-  background-color: #f4ece1;
-  color: #0a0a0a;
+  background-color: #0a0a0c;
+  color: #ffffff;
   font-family:
     system-ui,
     -apple-system,
@@ -48,39 +48,41 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Intensified Frosted Glassmorphism with Champagne Border */
+/* Flashy & Luminous Glassmorphism with Glowing Gold Borders */
 .luxury-glass {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(18, 18, 22, 0.72);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 0 4px 20px -2px rgba(184, 151, 88, 0.08);
+  border: 1px solid rgba(230, 197, 148, 0.35);
+  box-shadow: 0 0 30px rgba(230, 197, 148, 0.1);
 }
 
 .luxury-glass-gold {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(212, 175, 55, 0.45);
-  box-shadow: 0 20px 40px -15px rgba(212, 175, 55, 0.16);
+  background: rgba(24, 24, 32, 0.85);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(243, 213, 160, 0.55);
+  box-shadow:
+    0 0 45px rgba(230, 197, 148, 0.2),
+    inset 0 1px 0 rgba(243, 213, 160, 0.3);
 }
 
-/* Ambient Lighting with Golden Champagne Hue */
+/* Luminous Ambient Lighting Radial Auroras */
 .ambient-hero-glow {
   background: radial-gradient(
-    ellipse 80% 60% at 50% -10%,
-    rgba(212, 175, 55, 0.28),
-    rgba(235, 215, 185, 0.18) 45%,
-    rgba(244, 236, 225, 0) 75%
+    ellipse 85% 65% at 50% -10%,
+    rgba(230, 197, 148, 0.28),
+    rgba(243, 213, 160, 0.12) 38%,
+    rgba(10, 10, 12, 0) 75%
   );
 }
 
 .ambient-footer-glow {
   background: radial-gradient(
-    ellipse 70% 50% at 50% 110%,
-    rgba(212, 175, 55, 0.25),
-    rgba(235, 215, 185, 0.15) 50%,
-    rgba(244, 236, 225, 0) 75%
+    ellipse 75% 55% at 50% 110%,
+    rgba(230, 197, 148, 0.24),
+    rgba(243, 213, 160, 0.1) 45%,
+    rgba(10, 10, 12, 0) 75%
   );
 }
 
@@ -90,14 +92,14 @@ body {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #f4ece1;
+  background: #0a0a0c;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d4af37;
+  background: #e6c594;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #b89758;
+  background: #f3d5a0;
 }
 
 /* Disable Next.js dev indicator / badge in the viewport */

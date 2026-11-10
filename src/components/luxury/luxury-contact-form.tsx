@@ -129,25 +129,25 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
 
   if (successResponse) {
     return (
-      <div className="rounded-3xl border border-[#D4AF37]/40 bg-white/70 p-8 sm:p-12 text-center shadow-sm backdrop-blur-xl space-y-6 animate-in fade-in duration-300">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#FAF5EB] border border-[#D4AF37]/60 text-[#8C734B]">
+      <div className="rounded-3xl border border-[#E6C594]/60 bg-[#121216]/95 p-8 sm:p-12 text-center shadow-[0_0_50px_rgba(230,197,148,0.25)] backdrop-blur-2xl space-y-6 text-white animate-in fade-in duration-300">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#E6C594]/15 border border-[#E6C594]/60 text-[#F3D5A0]">
           <CheckIcon className="w-8 h-8" />
         </div>
 
         <div className="space-y-2">
-          <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#8C734B] font-semibold">
+          <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#F3D5A0] font-semibold">
             Inquiry Protocol Verified
           </span>
-          <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-[#171717]">
+          <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-white">
             Engagement Request Logged
           </h3>
-          <p className="text-sm text-[#5A5A5A] font-light max-w-lg mx-auto leading-relaxed">
+          <p className="text-sm text-[#A0A0B0] font-light max-w-lg mx-auto leading-relaxed">
             {successResponse.message} Direct dispatch routed to{" "}
-            <span className="font-mono text-[#171717] font-medium">info@morelandchambers.com</span>.
+            <span className="font-mono text-[#F3D5A0] font-medium">info@morelandchambers.com</span>.
           </p>
         </div>
 
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#E8E2D8] bg-[#FAF9F6] px-5 py-2 text-xs font-mono text-[#171717] shadow-sm">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E6C594]/40 bg-[#0A0A0C] px-5 py-2 text-xs font-mono text-white shadow-md">
           <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
           <span>Tracking Reference: {successResponse.referenceId}</span>
         </div>
@@ -166,7 +166,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
                 message: "",
               });
             }}
-            className="text-xs uppercase font-medium tracking-[0.2em] text-[#5A5A5A] hover:text-[#171717] underline underline-offset-4 cursor-pointer"
+            className="text-xs uppercase font-semibold tracking-[0.2em] text-[#E6C594] hover:text-[#F3D5A0] underline underline-offset-4 cursor-pointer"
           >
             Submit Another Project Brief
           </button>
@@ -180,19 +180,19 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
       id="contact-form"
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-3xl border border-[#D4AF37]/30 bg-white/60 p-8 sm:p-12 shadow-sm backdrop-blur-xl space-y-8"
+      className="rounded-3xl border border-[#E6C594]/35 bg-[#121216]/85 p-8 sm:p-12 shadow-[0_0_40px_rgba(230,197,148,0.12)] backdrop-blur-2xl space-y-8"
     >
-      <div className="space-y-2 border-b border-[#E8E2D8]/80 pb-6">
-        <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#8C734B] font-semibold block">
+      <div className="space-y-2 border-b border-[#E6C594]/20 pb-6">
+        <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#F3D5A0] font-semibold block">
           Direct Acquisition Channel
         </span>
-        <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-[#171717]">
+        <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-white">
           Initiate Executive Discussion
         </h3>
-        <p className="text-xs text-[#666666] font-light">
+        <p className="text-xs text-[#A0A0B0] font-light">
           Inquiries are handled strictly by our Senior Systems Engineering team under mutual
           non-disclosure terms. Contact:{" "}
-          <span className="text-[#171717] font-medium font-mono">info@morelandchambers.com</span>.
+          <span className="text-[#F3D5A0] font-medium font-mono">info@morelandchambers.com</span>.
         </p>
       </div>
 
@@ -201,9 +201,9 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
         <div className="space-y-2">
           <label
             htmlFor="businessName"
-            className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#5A5A5A] font-medium"
+            className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#D0D0E0] font-medium"
           >
-            Business Name <span className="text-[#8C734B]">*</span>
+            Business Name <span className="text-[#F3D5A0]">*</span>
           </label>
           <input
             id="businessName"
@@ -212,12 +212,14 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
             value={formData.businessName}
             onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
             placeholder="e.g. Apex Sovereign Holdings Ltd"
-            className={`w-full rounded-xl border bg-white/90 px-4 py-3.5 text-sm text-[#171717] placeholder:text-[#A3A3A3] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 ${
-              errors.businessName ? "border-rose-500" : "border-[#E8E2D8] hover:border-[#D4AF37]/60"
+            className={`w-full rounded-xl border bg-[#0A0A0C]/90 px-4 py-3.5 text-sm text-white placeholder:text-[#6A6A7A] transition-all focus:outline-none focus:ring-2 focus:ring-[#F3D5A0]/40 ${
+              errors.businessName
+                ? "border-rose-500"
+                : "border-[#E6C594]/30 hover:border-[#E6C594]/60 focus:border-[#F3D5A0]"
             }`}
           />
           {errors.businessName && (
-            <p className="text-[11px] text-rose-600 font-light">{errors.businessName}</p>
+            <p className="text-[11px] text-rose-400 font-light">{errors.businessName}</p>
           )}
         </div>
 
@@ -225,9 +227,9 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
         <div className="space-y-2">
           <label
             htmlFor="ownerName"
-            className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#5A5A5A] font-medium"
+            className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#D0D0E0] font-medium"
           >
-            Owner&apos;s / Signatory Name <span className="text-[#8C734B]">*</span>
+            Owner&apos;s / Signatory Name <span className="text-[#F3D5A0]">*</span>
           </label>
           <input
             id="ownerName"
@@ -236,12 +238,14 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
             value={formData.ownerName}
             onChange={(e) => setFormData({ ...formData, ownerName: e.target.value })}
             placeholder="e.g. Julian Morland"
-            className={`w-full rounded-xl border bg-white/90 px-4 py-3.5 text-sm text-[#171717] placeholder:text-[#A3A3A3] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 ${
-              errors.ownerName ? "border-rose-500" : "border-[#E8E2D8] hover:border-[#D4AF37]/60"
+            className={`w-full rounded-xl border bg-[#0A0A0C]/90 px-4 py-3.5 text-sm text-white placeholder:text-[#6A6A7A] transition-all focus:outline-none focus:ring-2 focus:ring-[#F3D5A0]/40 ${
+              errors.ownerName
+                ? "border-rose-500"
+                : "border-[#E6C594]/30 hover:border-[#E6C594]/60 focus:border-[#F3D5A0]"
             }`}
           />
           {errors.ownerName && (
-            <p className="text-[11px] text-rose-600 font-light">{errors.ownerName}</p>
+            <p className="text-[11px] text-rose-400 font-light">{errors.ownerName}</p>
           )}
         </div>
       </div>
@@ -251,9 +255,9 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
         <div className="space-y-2">
           <label
             htmlFor="companyEmail"
-            className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#5A5A5A] font-medium"
+            className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#D0D0E0] font-medium"
           >
-            Company Email Address <span className="text-[#8C734B]">*</span>
+            Company Email Address <span className="text-[#F3D5A0]">*</span>
           </label>
           <input
             id="companyEmail"
@@ -262,12 +266,14 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
             value={formData.companyEmail}
             onChange={(e) => setFormData({ ...formData, companyEmail: e.target.value })}
             placeholder="julian@apexholdings.com"
-            className={`w-full rounded-xl border bg-white/90 px-4 py-3.5 text-sm text-[#171717] placeholder:text-[#A3A3A3] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 ${
-              errors.companyEmail ? "border-rose-500" : "border-[#E8E2D8] hover:border-[#D4AF37]/60"
+            className={`w-full rounded-xl border bg-[#0A0A0C]/90 px-4 py-3.5 text-sm text-white placeholder:text-[#6A6A7A] transition-all focus:outline-none focus:ring-2 focus:ring-[#F3D5A0]/40 ${
+              errors.companyEmail
+                ? "border-rose-500"
+                : "border-[#E6C594]/30 hover:border-[#E6C594]/60 focus:border-[#F3D5A0]"
             }`}
           />
           {errors.companyEmail && (
-            <p className="text-[11px] text-rose-600 font-light">{errors.companyEmail}</p>
+            <p className="text-[11px] text-rose-400 font-light">{errors.companyEmail}</p>
           )}
         </div>
 
@@ -275,26 +281,28 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
         <div className="space-y-2">
           <label
             htmlFor="budget"
-            className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#5A5A5A] font-medium"
+            className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#D0D0E0] font-medium"
           >
-            Expected Budget / Price Point <span className="text-[#8C734B]">*</span>
+            Expected Budget / Price Point <span className="text-[#F3D5A0]">*</span>
           </label>
           <select
             id="budget"
             required
             value={formData.budget}
             onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-            className={`w-full appearance-none rounded-xl border bg-white/90 px-4 py-3.5 text-sm text-[#171717] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 ${
-              errors.budget ? "border-rose-500" : "border-[#E8E2D8] hover:border-[#D4AF37]/60"
+            className={`w-full appearance-none rounded-xl border bg-[#0A0A0C]/90 px-4 py-3.5 text-sm text-white transition-all focus:outline-none focus:ring-2 focus:ring-[#F3D5A0]/40 ${
+              errors.budget
+                ? "border-rose-500"
+                : "border-[#E6C594]/30 hover:border-[#E6C594]/60 focus:border-[#F3D5A0]"
             }`}
           >
             {BUDGET_OPTIONS.map((opt) => (
-              <option key={opt} value={opt} className="bg-white text-[#171717] py-1">
+              <option key={opt} value={opt} className="bg-[#121216] text-white py-1">
                 {opt}
               </option>
             ))}
           </select>
-          {errors.budget && <p className="text-[11px] text-rose-600 font-light">{errors.budget}</p>}
+          {errors.budget && <p className="text-[11px] text-rose-400 font-light">{errors.budget}</p>}
         </div>
       </div>
 
@@ -302,7 +310,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
       <div className="space-y-2">
         <label
           htmlFor="contact-message"
-          className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#5A5A5A] font-medium"
+          className="block text-[11px] uppercase font-mono tracking-[0.2em] text-[#D0D0E0] font-medium"
         >
           Scope Summary / Architecture Requirements (Optional)
         </label>
@@ -312,7 +320,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           placeholder="Briefly describe your current platform, customer scaling bottlenecks, or target deployment date..."
-          className="w-full rounded-xl border border-[#E8E2D8] bg-white/90 p-4 text-sm text-[#171717] placeholder:text-[#A3A3A3] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 hover:border-[#D4AF37]/60"
+          className="w-full rounded-xl border border-[#E6C594]/30 bg-[#0A0A0C]/90 p-4 text-sm text-white placeholder:text-[#6A6A7A] transition-all focus:outline-none focus:border-[#F3D5A0] focus:ring-2 focus:ring-[#F3D5A0]/40 hover:border-[#E6C594]/60"
         />
       </div>
 
@@ -321,11 +329,11 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-4 px-8 rounded-full bg-[#171717] text-white text-xs font-medium uppercase tracking-[0.24em] hover:bg-[#2B2B2B] shadow-xl shadow-neutral-900/10 border border-[#D4AF37]/50 transition-all duration-200 flex items-center justify-center gap-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full py-4 px-8 rounded-full bg-gradient-to-r from-[#E6C594] via-[#F3D5A0] to-[#E6C594] text-black text-xs font-bold uppercase tracking-[0.24em] shadow-[0_0_35px_rgba(230,197,148,0.4)] hover:shadow-[0_0_50px_rgba(230,197,148,0.65)] hover:scale-[1.01] border border-[#FFF0D4]/80 transition-all duration-200 flex items-center justify-center gap-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F3D5A0] disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? (
             <>
-              <SpinnerIcon className="w-4 h-4 animate-spin text-[#D4AF37]" />
+              <SpinnerIcon className="w-4 h-4 animate-spin text-black" />
               <span>Transmitting Architecture Request...</span>
             </>
           ) : (
@@ -337,7 +345,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
         </button>
       </div>
 
-      <div className="flex items-center justify-center gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-[#8C8C8C] text-center pt-2">
+      <div className="flex items-center justify-center gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-[#A0A0B0] text-center pt-2">
         <span>Strict Non-Disclosure</span>
         <span>·</span>
         <span>Guaranteed 24-Hour Response</span>
