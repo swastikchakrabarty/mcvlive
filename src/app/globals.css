@@ -1,32 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  /* 60% Dominant Background */
+  /* Fear of God / Luxury Palette Tokens */
+  --luxury-base: #faf9f6;
+  --luxury-surface: rgba(255, 255, 255, 0.72);
+  --luxury-surface-elevated: rgba(255, 255, 255, 0.88);
+  --luxury-champagne: #c5a880;
+  --luxury-gold-border: rgba(197, 168, 128, 0.35);
+  --luxury-border-subtle: rgba(229, 224, 216, 0.6);
+  --luxury-text-primary: #121212;
+  --luxury-text-secondary: #5a5a5a;
+  --luxury-text-muted: #8c8c8c;
+  --luxury-gold-glow: rgba(212, 175, 55, 0.12);
+
+  /* Layer 5/6 Tokens preserved for compatibility */
   --bg-dominant: #090d16;
   --bg-dominant-elevated: #0d1322;
-
-  /* 30% Structural Surface */
   --surface-card: #111a2e;
   --surface-card-hover: #16223b;
   --surface-border: #1e293b;
   --surface-border-subtle: #27354f;
-
-  /* 10% High-Contrast Accent */
   --accent-primary: #6366f1;
   --accent-primary-hover: #4f46e5;
   --accent-primary-glow: rgba(99, 102, 241, 0.25);
   --accent-emerald: #10b981;
   --accent-emerald-glow: rgba(16, 185, 129, 0.2);
-
-  /* Typography */
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
 }
 
 body {
-  background-color: #090d16;
-  color: #f8fafc;
+  background-color: #faf9f6;
+  color: #121212;
   font-family:
     system-ui,
     -apple-system,
@@ -42,18 +48,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Ambient glow & glassmorphism utilities */
+.luxury-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 224, 216, 0.6);
+}
+
+.luxury-glass-gold {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(197, 168, 128, 0.4);
+  box-shadow: 0 20px 40px -15px rgba(197, 168, 128, 0.12);
+}
+
+.ambient-hero-glow {
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 0%,
+    rgba(217, 196, 163, 0.35),
+    rgba(250, 249, 246, 0) 75%
+  );
+}
+
+.ambient-footer-glow {
+  background: radial-gradient(
+    ellipse 70% 50% at 50% 100%,
+    rgba(217, 196, 163, 0.28),
+    rgba(250, 249, 246, 0) 75%
+  );
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #faf9f6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #d9cebf;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #c5a880;
 }

@@ -6,27 +6,27 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#090D16",
+  themeColor: "#FAF9F6",
 };
 
 export const metadata: Metadata = {
-  title: "Morland Chambers Vector | Enterprise Web Architectures & Vector Engines",
+  title: "Morland Chambers Vector | Luxury Corporate Web Architectures & Software Systems",
   description:
-    "Institutional corporate software sales platform, proprietary vector architectures, sovereign multi-tenant databases, and mission-critical cloud blueprints.",
+    "We build software, websites, and web applications for businesses to grow so they never miss another customer. Institutional-grade architectures, luxury digital craftsmanship, and sovereign infrastructure.",
   keywords: [
     "Morland Chambers Vector",
-    "vector database architecture",
-    "sovereign web platform",
-    "high-throughput inference",
-    "institutional cloud blueprints",
+    "Luxury Corporate Web Architecture",
+    "Enterprise Software Development",
+    "Bespoke Web Applications",
+    "Never Miss Another Customer",
   ],
-  authors: [{ name: "Morland Chambers Vector Systems" }],
+  authors: [{ name: "Morland Chambers Vector" }],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className="min-h-screen bg-[#090D16] text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+    <html lang="en" className="scroll-smooth">
+      <body className="min-h-screen bg-[#FAF9F6] text-[#121212] antialiased selection:bg-[#C5A880] selection:text-white">
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

@@ -1,462 +1,294 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  ServerIcon,
-  ShieldCheckIcon,
-  CpuIcon,
-  ZapIcon,
-  TerminalIcon,
-  DatabaseIcon,
-  ArrowRightIcon,
-  CheckIcon,
-  ActivityIcon,
-  LockIcon,
-} from "@/components/ui/icons";
-import { TelemetryRadar } from "@/components/home/telemetry-radar";
-import { PricingSection } from "@/components/home/pricing-section";
-import { CorporateContactForm } from "@/components/home/contact-form";
+"use client";
 
-export default function CorporateHomePage() {
+import { useState } from "react";
+import { LuxuryNav } from "@/components/luxury/luxury-nav";
+import { LuxuryBillingTiers } from "@/components/luxury/billing-tiers";
+import { LuxuryContactForm } from "@/components/luxury/luxury-contact-form";
+import { ArrowRightIcon } from "@/components/ui/icons";
+
+export default function LuxuryHomePage() {
+  const [selectedTier, setSelectedTier] = useState<string>("100_advance");
+
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 selection:bg-indigo-500 selection:text-white">
-      {/* 1. Global Corporate Header */}
-      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#090D16]/90 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          {/* Brand Monogram */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-lg p-1"
+    <div className="relative min-h-screen bg-[#FAF9F6] text-[#121212] overflow-hidden selection:bg-[#C5A880] selection:text-white">
+      {/* Subtle Top Ambient Lighting Aura */}
+      <div
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[640px] ambient-hero-glow z-0"
+        aria-hidden="true"
+      />
+
+      {/* 1. Fear of God Minimalist Navigation */}
+      <LuxuryNav />
+
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32 sm:space-y-40 pt-16 sm:pt-24 pb-28">
+        {/* 2. Hero Section: Flashy Ambient Lighting & Powerful Headline */}
+        <section
+          aria-labelledby="hero-heading"
+          className="relative min-h-[75vh] flex flex-col justify-center items-center text-center max-w-5xl mx-auto space-y-8"
+        >
+          {/* Subtle Ambient Golden Halo Accent */}
+          <div
+            className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 w-[340px] sm:w-[540px] h-[340px] sm:h-[400px] rounded-full bg-gradient-to-b from-[#EBDCC5]/50 via-[#E8D6BD]/25 to-transparent blur-3xl -z-10"
+            aria-hidden="true"
+          />
+
+          {/* Subtitle Pill */}
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-[#D4AF37]/40 bg-white/90 px-4 py-1.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.28em] text-[#8C734B] shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+            <span>Morland Chambers Vector · Bespoke Engineering</span>
+          </div>
+
+          {/* Powerful Headline */}
+          <h1
+            id="hero-heading"
+            className="text-4xl sm:text-6xl lg:text-7xl font-extralight tracking-tight text-[#171717] leading-[1.08] uppercase"
           >
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-mono font-extrabold text-white text-base shadow-lg shadow-indigo-950/80 border border-indigo-400/40">
-              MCV
-            </div>
-            <div>
-              <span className="block font-bold tracking-tight text-slate-100 text-sm sm:text-base">
-                Morland Chambers Vector
-              </span>
-              <span className="block text-[11px] font-mono uppercase tracking-wider text-slate-400">
-                Institutional Web Architectures
-              </span>
-            </div>
-          </Link>
+            We build software, websites, and web applications for businesses to grow{" "}
+            <span className="font-normal italic text-[#8C734B]">
+              so they never miss another customer.
+            </span>
+          </h1>
 
-          {/* Navigation Links */}
-          <nav
-            aria-label="Corporate Navigation"
-            className="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-slate-300"
-          >
-            <a href="#services" className="hover:text-indigo-400 transition-colors">
-              Capabilities
-            </a>
-            <a href="#blueprints" className="hover:text-indigo-400 transition-colors">
-              Architectures
-            </a>
-            <a href="#pricing" className="hover:text-indigo-400 transition-colors">
-              Licensing
-            </a>
-            <Link href="/design" className="hover:text-indigo-400 transition-colors">
-              Design System
-            </Link>
-            <Link href="/dashboard" className="hover:text-indigo-400 transition-colors">
-              Client Console
-            </Link>
-          </nav>
+          {/* Refined Luxury Description */}
+          <p className="text-sm sm:text-lg text-[#5A5A5A] font-light max-w-3xl mx-auto leading-relaxed tracking-wide">
+            In an institutional landscape where seconds determine market capture, generic templates
+            cost millions. We design and construct bespoke web platforms, conversion-optimized
+            architectures, and high-throughput software systems engineered for exponential customer
+            acquisition.
+          </p>
 
-          {/* Action CTAs */}
-          <div className="flex items-center gap-3">
-            <Link href="/dashboard" className="hidden sm:inline-flex">
-              <Button variant="secondary" size="sm">
-                Client Sign In
-              </Button>
-            </Link>
-            <a href="#contact">
-              <Button
-                variant="primary"
-                size="sm"
-                iconRight={<ArrowRightIcon className="w-4 h-4" />}
-              >
-                Engage MCV
-              </Button>
-            </a>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 space-y-28">
-        {/* 2. Technical Hero Section */}
-        <section aria-labelledby="hero-heading" className="space-y-12">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
-            {/* Telemetry pill */}
-            <div className="inline-flex items-center gap-2.5 rounded-full bg-slate-900 border border-slate-700/80 px-4 py-1.5 text-xs text-slate-300 shadow-sm">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono text-slate-400 uppercase tracking-wider">
-                Status: Global Ingress Clusters Nominal
-              </span>
-              <span className="text-slate-600">|</span>
-              <span className="font-mono text-emerald-400 font-medium">3.8ms P99</span>
-            </div>
-
-            {/* Headline */}
-            <h1
-              id="hero-heading"
-              className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-100 leading-[1.08]"
+          {/* Dual Action Triggers */}
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2.5 rounded-full bg-[#171717] px-8 py-4 text-xs uppercase font-medium tracking-[0.24em] text-white shadow-xl shadow-neutral-900/10 hover:bg-[#2B2B2B] border border-[#D4AF37]/50 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
             >
-              Institutional Vector Systems &{" "}
-              <span className="bg-gradient-to-r from-indigo-400 via-indigo-300 to-indigo-500 bg-clip-text text-transparent">
-                Sovereign Architectures
-              </span>
-            </h1>
+              <span>Initiate Engagement</span>
+              <ArrowRightIcon className="w-3.5 h-3.5" />
+            </a>
 
-            {/* Sub-headline */}
-            <p className="text-base sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed font-normal">
-              Morland Chambers Vector designs, engineers, and operates mission-critical corporate
-              web platforms, sub-millisecond vector indexing engines, and cryptographic multi-tenant
-              foundations for global financial institutions and sovereign enterprises.
-            </p>
-
-            {/* Hero CTAs */}
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-              <a href="#contact">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  iconRight={<ArrowRightIcon className="w-5 h-5" />}
-                >
-                  Initialize Sovereign Infrastructure
-                </Button>
-              </a>
-              <Link href="/dashboard">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  iconLeft={<TerminalIcon className="w-5 h-5 text-indigo-400" />}
-                >
-                  Launch Client Console
-                </Button>
-              </Link>
-            </div>
-
-            {/* Hero Guarantee Badges */}
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
-              <div className="flex items-center gap-1.5">
-                <ShieldCheckIcon className="w-4 h-4 text-emerald-400" />
-                <span>Anti-BOLA Authorization Locked</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <DatabaseIcon className="w-4 h-4 text-indigo-400" />
-                <span>Postgres Row-Level Security</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <ZapIcon className="w-4 h-4 text-amber-400" />
-                <span>Sub-5ms Vector Ingress</span>
-              </div>
-            </div>
+            <a
+              href="#billing"
+              className="inline-flex items-center gap-2 rounded-full border border-[#E8E2D8] bg-white/80 px-8 py-4 text-xs uppercase font-medium tracking-[0.22em] text-[#171717] hover:border-[#D4AF37] hover:bg-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+            >
+              <span>View Billing Systems</span>
+            </a>
           </div>
 
-          {/* Interactive Telemetry Cluster Preview */}
-          <div className="max-w-5xl mx-auto">
-            <TelemetryRadar />
+          {/* Credibility Ribbon */}
+          <div className="pt-8 flex flex-wrap items-center justify-center gap-8 text-[11px] uppercase font-mono tracking-[0.22em] text-[#8C8C8C]">
+            <span>Zero Cold-Starts</span>
+            <span>·</span>
+            <span>Sub-5ms Execution</span>
+            <span>·</span>
+            <span>100% Sovereign Tenancy</span>
           </div>
         </section>
 
-        {/* 3. Core Capabilities & Services Grid */}
-        <section id="services" aria-labelledby="services-heading" className="space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full bg-indigo-950/80 border border-indigo-800/60 px-3.5 py-1 text-xs font-mono font-medium text-indigo-300">
-              <CpuIcon className="w-3.5 h-3.5" />
-              <span>Institutional Core Capabilities</span>
-            </div>
+        {/* 3. The Philosophy Section: Never Miss Another Customer */}
+        <section
+          id="philosophy"
+          aria-labelledby="philosophy-heading"
+          className="space-y-16 max-w-5xl mx-auto"
+        >
+          <div className="text-center space-y-4">
+            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#8C734B] font-semibold block">
+              Core Philosophy
+            </span>
             <h2
-              id="services-heading"
-              className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight"
+              id="philosophy-heading"
+              className="text-3xl sm:text-5xl font-extralight tracking-tight text-[#171717] uppercase"
             >
-              Engineered for Zero Failure Tolerances
+              The Cost of a Missed Customer
             </h2>
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-              Every system deployed by Morland Chambers Vector is built upon strict architectural
-              boundaries, zero-trust secrets management, and mathematical data isolation.
+            <p className="text-sm sm:text-base text-[#5A5A5A] font-light max-w-2xl mx-auto leading-relaxed">
+              Every millisecond of latency, clumsy checkout flow, or server outage is a permanent
+              revenue leakage. We build systems that make customer abandonment mathematically
+              negligible.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Service 1 */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-4 shadow-md hover:border-slate-700 transition-colors">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-950/80 border border-indigo-800/60 text-indigo-400">
-                <ServerIcon className="w-6 h-6" />
-              </div>
-              <h3 className="text-base font-bold text-slate-100">Sovereign Web Architectures</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Modern Next.js React Server Components with streaming SSR, edge delivery, and zero
-                cold-start serverless runtimes optimized for sub-100ms global FCP.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1 */}
+            <div className="luxury-glass rounded-3xl p-8 space-y-4 shadow-lg shadow-neutral-900/5 hover:border-[#D4AF37]/50 transition-all duration-300">
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8C734B] font-bold">
+                01 / Acquisition
+              </span>
+              <h3 className="text-xl font-light tracking-tight text-[#171717]">
+                Instantaneous Ingress
+              </h3>
+              <p className="text-xs text-[#5A5A5A] font-light leading-relaxed">
+                Edge-deployed Next.js streaming architectures rendering interactive pages in under
+                80 milliseconds. Your buyers never wait; their interest is captured immediately.
               </p>
-              <ul className="text-xs text-slate-300 space-y-1 pt-1 font-mono">
-                <li className="flex items-center gap-1.5">
-                  <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>RSC Streaming Core</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Edge CDN Caching</span>
-                </li>
-              </ul>
             </div>
 
-            {/* Service 2 */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-4 shadow-md hover:border-slate-700 transition-colors">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-950/80 border border-indigo-800/60 text-indigo-400">
-                <ZapIcon className="w-6 h-6" />
-              </div>
-              <h3 className="text-base font-bold text-slate-100">Bespoke Vector Engines</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                High-throughput vector indexing using HNSW and IVF-PQ quantization algorithms.
-                Bespoke Python microservices delivering sub-5ms semantic retrieval at scale.
+            {/* Card 2 */}
+            <div className="luxury-glass rounded-3xl p-8 space-y-4 shadow-lg shadow-neutral-900/5 hover:border-[#D4AF37]/50 transition-all duration-300">
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8C734B] font-bold">
+                02 / Conversion
+              </span>
+              <h3 className="text-xl font-light tracking-tight text-[#171717]">
+                Frictionless Transactions
+              </h3>
+              <p className="text-xs text-[#5A5A5A] font-light leading-relaxed">
+                Bespoke user journeys with client-side zero-latency validation, instant payment
+                confirmations, and real-time inventory synchronization.
               </p>
-              <ul className="text-xs text-slate-300 space-y-1 pt-1 font-mono">
-                <li className="flex items-center gap-1.5">
-                  <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>HNSW & IVF-PQ Support</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Billion-Scale Quantization</span>
-                </li>
-              </ul>
             </div>
 
-            {/* Service 3 */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-4 shadow-md hover:border-slate-700 transition-colors">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-950/80 border border-indigo-800/60 text-indigo-400">
-                <ShieldCheckIcon className="w-6 h-6" />
-              </div>
-              <h3 className="text-base font-bold text-slate-100">Multi-Tenant Isolation</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Absolute tenant segregation enforced at both database (PostgreSQL RLS) and
-                application layers. Centralized Anti-BOLA authorization preventing enumeration.
+            {/* Card 3 */}
+            <div className="luxury-glass rounded-3xl p-8 space-y-4 shadow-lg shadow-neutral-900/5 hover:border-[#D4AF37]/50 transition-all duration-300">
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8C734B] font-bold">
+                03 / Retention
+              </span>
+              <h3 className="text-xl font-light tracking-tight text-[#171717]">
+                Sovereign Trust & SLA
+              </h3>
+              <p className="text-xs text-[#5A5A5A] font-light leading-relaxed">
+                Hardened multi-tenant PostgreSQL databases with Row-Level Security, Anti-BOLA
+                authorization guards, and 99.999% uptime guarantees.
               </p>
-              <ul className="text-xs text-slate-300 space-y-1 pt-1 font-mono">
-                <li className="flex items-center gap-1.5">
-                  <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Strict Row-Level Security</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Anti-BOLA/IDOR Shields</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Service 4 */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-4 shadow-md hover:border-slate-700 transition-colors">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-950/80 border border-indigo-800/60 text-indigo-400">
-                <ActivityIcon className="w-6 h-6" />
-              </div>
-              <h3 className="text-base font-bold text-slate-100">Autonomous Agent Queues</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Asynchronous job queues with idempotency keys, exponential backoff retries, and
-                cryptographic Stripe webhook ingestion with zero duplicate replay risks.
-              </p>
-              <ul className="text-xs text-slate-300 space-y-1 pt-1 font-mono">
-                <li className="flex items-center gap-1.5">
-                  <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Idempotent Worker Queue</span>
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckIcon className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Webhook Cryptography</span>
-                </li>
-              </ul>
             </div>
           </div>
         </section>
 
-        {/* 4. High-End Case Studies & Deployed Blueprints */}
-        <section id="blueprints" aria-labelledby="blueprints-heading" className="space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full bg-indigo-950/80 border border-indigo-800/60 px-3.5 py-1 text-xs font-mono font-medium text-indigo-300">
-              <TerminalIcon className="w-3.5 h-3.5" />
-              <span>Proven Production Architectures</span>
-            </div>
+        {/* 4. Engineering Capabilities */}
+        <section
+          id="architectures"
+          aria-labelledby="architectures-heading"
+          className="space-y-16 max-w-6xl mx-auto"
+        >
+          <div className="text-center space-y-4">
+            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#8C734B] font-semibold block">
+              Architectural Scope
+            </span>
             <h2
-              id="blueprints-heading"
-              className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight"
+              id="architectures-heading"
+              className="text-3xl sm:text-5xl font-extralight tracking-tight text-[#171717] uppercase"
             >
-              Enterprise Case Studies & Blueprints
+              What We Construct
             </h2>
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-              Institutional implementations operating live vector workloads under strict global
-              jurisdictional oversight.
+            <p className="text-sm sm:text-base text-[#5A5A5A] font-light max-w-2xl mx-auto leading-relaxed">
+              We specialize in 3 core disciplines of high-growth digital infrastructure:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Case Study 1 */}
-            <div className="rounded-3xl border border-slate-800 bg-slate-900/60 p-8 space-y-5 hover:border-indigo-500/50 transition-all duration-200">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold uppercase text-indigo-400">
-                  Case Study 01
-                </span>
-                <span className="rounded bg-slate-800 px-2 py-0.5 text-[11px] font-mono text-slate-300">
-                  FCA Regulated
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-slate-100">Apex Sovereign Systems Ltd</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Engineered a distributed vector pipeline indexing 450M legal artifacts with sub-4ms
-                hybrid lexical-dense retrieval, enforcing strict multi-tenant boundary checks across
-                3 sovereign entities.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="rounded-3xl border border-[#E8E2D8] bg-white/70 p-8 space-y-4 shadow-sm">
+              <h3 className="text-lg font-normal text-[#171717] uppercase tracking-wide">
+                Bespoke Corporate Websites
+              </h3>
+              <p className="text-xs text-[#5A5A5A] font-light leading-relaxed">
+                High-aesthetic, authoritative flagship websites for investment firms, luxury
+                enterprises, and technology leaders. Designed to project power and convert
+                high-net-worth clients.
               </p>
-              <div className="border-t border-slate-800 pt-4 space-y-2">
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Daily Query Volume:</span>
-                  <span className="font-mono text-slate-200 font-semibold">450 Million QPS</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Uptime Reliability:</span>
-                  <span className="font-mono text-emerald-400 font-semibold">99.999% SLA</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Jurisdiction:</span>
-                  <span className="font-mono text-indigo-300">London (UK-01)</span>
-                </div>
+              <div className="pt-2 text-[11px] font-mono text-[#8C734B] uppercase tracking-wider">
+                Next.js · Tailwind · Edge SSR
               </div>
             </div>
 
-            {/* Case Study 2 */}
-            <div className="rounded-3xl border border-slate-800 bg-slate-900/60 p-8 space-y-5 hover:border-indigo-500/50 transition-all duration-200">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold uppercase text-indigo-400">
-                  Case Study 02
-                </span>
-                <span className="rounded bg-slate-800 px-2 py-0.5 text-[11px] font-mono text-slate-300">
-                  BaFin Compliant
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-slate-100">Helios Global Vector Inc</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Deployed cross-border EU GDPR compliance vaults with automated zero-knowledge cold
-                storage synchronization and pre-signed cryptographic client uploads.
+            <div className="rounded-3xl border border-[#E8E2D8] bg-white/70 p-8 space-y-4 shadow-sm">
+              <h3 className="text-lg font-normal text-[#171717] uppercase tracking-wide">
+                Mission-Critical Web Applications
+              </h3>
+              <p className="text-xs text-[#5A5A5A] font-light leading-relaxed">
+                Full-stack transactional SaaS, client portals, trading desks, and administrative
+                consoles built with absolute data integrity and sub-second reactivity.
               </p>
-              <div className="border-t border-slate-800 pt-4 space-y-2">
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Storage Protection:</span>
-                  <span className="font-mono text-slate-200 font-semibold">Private By Default</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Cross-Tenant Leakage:</span>
-                  <span className="font-mono text-emerald-400 font-semibold">
-                    0.00% (Mathematically Verified)
-                  </span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Jurisdiction:</span>
-                  <span className="font-mono text-indigo-300">Frankfurt (DE-01)</span>
-                </div>
+              <div className="pt-2 text-[11px] font-mono text-[#8C734B] uppercase tracking-wider">
+                React 19 · Node.js · Clerk Auth
               </div>
             </div>
 
-            {/* Case Study 3 */}
-            <div className="rounded-3xl border border-slate-800 bg-slate-900/60 p-8 space-y-5 hover:border-indigo-500/50 transition-all duration-200">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold uppercase text-indigo-400">
-                  Case Study 03
-                </span>
-                <span className="rounded bg-slate-800 px-2 py-0.5 text-[11px] font-mono text-slate-300">
-                  SEC Ready
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-slate-100">Vanguard Enterprise Blueprints</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                One-click sovereign tenancy provisioning for rapid institutional onboarding,
-                featuring automated background invoicing and 7-day cryptographically expiring team
-                invitations.
+            <div className="rounded-3xl border border-[#E8E2D8] bg-white/70 p-8 space-y-4 shadow-sm">
+              <h3 className="text-lg font-normal text-[#171717] uppercase tracking-wide">
+                Enterprise Vector Infrastructure
+              </h3>
+              <p className="text-xs text-[#5A5A5A] font-light leading-relaxed">
+                Sub-millisecond vector indexing engines, autonomous background worker queues, and
+                sovereign database partitions engineered for enterprise AI scale.
               </p>
-              <div className="border-t border-slate-800 pt-4 space-y-2">
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Provisioning Time:</span>
-                  <span className="font-mono text-slate-200 font-semibold">
-                    &lt; 350 Milliseconds
-                  </span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">RBAC Role Enforcement:</span>
-                  <span className="font-mono text-emerald-400 font-semibold">
-                    Owner / Admin / Member / Viewer
-                  </span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">Jurisdiction:</span>
-                  <span className="font-mono text-indigo-300">New York (US-01)</span>
-                </div>
+              <div className="pt-2 text-[11px] font-mono text-[#8C734B] uppercase tracking-wider">
+                PostgreSQL RLS · HNSW · FastAPI
               </div>
             </div>
           </div>
         </section>
 
-        {/* 5. Transparent Pricing & Feature Gates */}
-        <PricingSection />
+        {/* 5. Billing Systems Section (3 Tiers) */}
+        <LuxuryBillingTiers onSelectTier={(tierId) => setSelectedTier(tierId)} />
 
-        {/* 6. Direct Contact & Corporate Inquiry */}
-        <section id="contact" aria-labelledby="contact-heading" className="space-y-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full bg-indigo-950/80 border border-indigo-800/60 px-3.5 py-1 text-xs font-mono font-medium text-indigo-300">
-              <LockIcon className="w-3.5 h-3.5" />
-              <span>Sovereign Engagement Channel</span>
+        {/* 6. Streamlined Contact Form */}
+        <section
+          id="contact"
+          aria-labelledby="contact-heading"
+          className="space-y-12 max-w-3xl mx-auto"
+        >
+          <div className="text-center space-y-4">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/40 bg-white/80 px-4 py-1 text-[11px] uppercase tracking-[0.25em] font-semibold text-[#8C734B] shadow-sm">
+              <span>Direct Client Onboarding</span>
             </div>
             <h2
               id="contact-heading"
-              className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight"
+              className="text-3xl sm:text-5xl font-extralight tracking-tight text-[#171717] uppercase"
             >
-              Direct Corporate Engagement
+              Begin Your Architecture
             </h2>
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-              Initiate a confidential architecture consultation or license procurement directly with
-              our Senior Systems Engineers.
+            <p className="text-sm sm:text-base text-[#5A5A5A] font-light max-w-xl mx-auto leading-relaxed">
+              Complete our executive brief below. Our Principal Engineers review each submission and
+              respond within 24 hours.
             </p>
           </div>
 
-          <div className="max-w-2xl mx-auto">
-            <CorporateContactForm />
-          </div>
+          <LuxuryContactForm initialTier={selectedTier} />
         </section>
       </main>
 
-      {/* 7. Institutional Footer */}
-      <footer className="mt-28 border-t border-slate-800 bg-[#070B13] text-slate-400 text-xs py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-slate-800/80">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-mono font-bold text-white text-xs">
-                MCV
-              </div>
-              <span className="font-bold text-slate-200 text-sm">
-                Morland Chambers Vector Systems
+      {/* 7. Footer Section: Catchy High-End Copy & Subtle Ambient Glow */}
+      <footer className="relative border-t border-[#E8E2D8] bg-[#F7F5F0] text-[#171717] py-20 overflow-hidden">
+        {/* Subtle Bottom Ambient Glow */}
+        <div
+          className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[420px] ambient-footer-glow z-0"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {/* Catchy High-End Statement */}
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <h2 className="text-2xl sm:text-4xl font-extralight uppercase tracking-tight text-[#171717] leading-snug">
+              Morland Chambers Vector — We build the software, websites, and web applications that
+              empower businesses to scale exponentially.{" "}
+              <span className="font-normal italic text-[#8C734B]">
+                Never miss another customer.
               </span>
-            </div>
-            <div className="flex flex-wrap items-center gap-6 font-mono text-slate-400 text-xs">
-              <span>Jurisdictions: London · Frankfurt · Singapore · New York</span>
-              <span className="text-emerald-400">● Systems Operational</span>
+            </h2>
+
+            <div className="pt-2">
+              <a
+                href="mailto:info@morelandchambers.com"
+                className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-white/90 px-6 py-2.5 text-xs font-mono uppercase tracking-[0.22em] text-[#171717] shadow-sm hover:border-[#D4AF37] hover:bg-[#171717] hover:text-white transition-all duration-200"
+              >
+                <span>info@morelandchambers.com</span>
+                <ArrowRightIcon className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
-            <p>
-              © 2026 Morland Chambers Vector. All corporate rights reserved. Institutional web
-              architecture sales platform.
-            </p>
-            <div className="flex items-center gap-6">
-              <Link href="/design" className="hover:text-slate-300 transition-colors">
-                Design System (/design)
-              </Link>
-              <Link href="/dashboard" className="hover:text-slate-300 transition-colors">
-                Client Console
-              </Link>
-              <a
-                href="mailto:info@morelandchambers.com"
-                className="hover:text-indigo-400 transition-colors font-mono"
-              >
-                info@morelandchambers.com
-              </a>
+          {/* Minimalist Footnote & Global Jurisdictions */}
+          <div className="pt-10 border-t border-[#E8E2D8]/80 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-[#8C8C8C] font-light">
+            <div className="flex items-center gap-3">
+              <span className="font-mono font-medium text-[#171717] tracking-wider text-xs">
+                MCV SYSTEMS
+              </span>
+              <span>·</span>
+              <span>London · Zurich · New York · Singapore</span>
             </div>
+
+            <p className="text-[11px] font-mono tracking-wider">
+              © 2026 MORLAND CHAMBERS VECTOR. ALL RIGHTS RESERVED.
+            </p>
           </div>
         </div>
       </footer>

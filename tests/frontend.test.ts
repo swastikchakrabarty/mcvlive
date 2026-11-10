@@ -207,6 +207,9 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
         "src/components/home/contact-form.tsx",
         "src/components/home/pricing-section.tsx",
         "src/components/home/telemetry-radar.tsx",
+        "src/components/luxury/luxury-nav.tsx",
+        "src/components/luxury/billing-tiers.tsx",
+        "src/components/luxury/luxury-contact-form.tsx",
         "src/components/ui/button.tsx",
         "src/components/ui/modal.tsx",
         "src/components/ui/toast.tsx",
@@ -236,15 +239,16 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
     });
   });
 
-  describe("60-30-10 Color Balance Rule in CSS", () => {
-    it("defines 60% dominant, 30% structural, and 10% accent variables in globals.css", () => {
+  describe("Fear of God Luxury Aesthetic & Glassmorphism in CSS", () => {
+    it("defines luxury sober white base, champagne gold accents, and ambient lighting utilities", () => {
       const cssPath = path.resolve(process.cwd(), "src/app/globals.css");
       const cssContent = fs.readFileSync(cssPath, "utf-8");
 
-      expect(cssContent).toContain("--bg-dominant: #090d16");
-      expect(cssContent).toContain("--surface-card: #111a2e");
-      expect(cssContent).toContain("--accent-primary: #6366f1");
-      expect(cssContent).toContain("--accent-emerald: #10b981");
+      expect(cssContent).toContain("--luxury-base: #faf9f6");
+      expect(cssContent).toContain("--luxury-champagne: #c5a880");
+      expect(cssContent).toContain(".luxury-glass");
+      expect(cssContent).toContain(".ambient-hero-glow");
+      expect(cssContent).toContain(".ambient-footer-glow");
     });
   });
 });
