@@ -365,6 +365,15 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
         expect(entry.changeFrequency).toBeDefined();
         expect(entry.priority).toBeDefined();
       }
+
+      const rootEntry = sitemap.find(
+        (entry) =>
+          entry.url === "https://morelandchambersvector.com" ||
+          entry.url.endsWith("morelandchambersvector.com"),
+      );
+      expect(rootEntry).toBeDefined();
+      expect(rootEntry?.priority).toBe(1.0);
+      expect(rootEntry?.changeFrequency).toBe("daily");
     });
 
     it("generates production robots.txt allowing public paths and blocking private API endpoints", async () => {
@@ -396,6 +405,25 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
       const navContent = fs.readFileSync(navPath, "utf-8");
       expect(navContent).toContain("/mcvlogo.png");
       expect(navContent).toContain('alt="Morland Chambers Vector Logo"');
+    });
+  });
+
+  describe("Playbook Layer 13: Error Boundaries Architecture", () => {
+    it("ensures error.tsx and global-error.tsx exist and provide luxury error isolation", () => {
+      const errorBoundaryPath = path.resolve(process.cwd(), "src/app/error.tsx");
+      const globalErrorPath = path.resolve(process.cwd(), "src/app/global-error.tsx");
+
+      expect(fs.existsSync(errorBoundaryPath)).toBe(true);
+      expect(fs.existsSync(globalErrorPath)).toBe(true);
+
+      const errorContent = fs.readFileSync(errorBoundaryPath, "utf-8");
+      expect(errorContent).toContain("Restore Runtime");
+      expect(errorContent).toContain("CLIENT_ERROR_BOUNDARY_TRIGGERED");
+
+      const globalErrorContent = fs.readFileSync(globalErrorPath, "utf-8");
+      expect(globalErrorContent).toContain("<html");
+      expect(globalErrorContent).toContain("<body");
+      expect(globalErrorContent).toContain("Reinitialize Application");
     });
   });
 });

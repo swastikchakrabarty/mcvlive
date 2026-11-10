@@ -133,6 +133,7 @@ describe("Contact Ingress API (/api/contact) & Security Hardening", () => {
       expect(blockedRes.status).toBe(429);
       expect(blockedRes.headers.get("Retry-After")).toBeDefined();
       expect(Number(blockedRes.headers.get("Retry-After"))).toBeGreaterThan(0);
+      expect(Number(blockedRes.headers.get("Retry-After"))).toBeLessThanOrEqual(900);
 
       const body = await blockedRes.json();
       expect(body.success).toBe(false);

@@ -31,12 +31,12 @@ export type ContactInput = z.infer<typeof contactSchema>;
 export async function POST(req: NextRequest) {
   const requestId = `req_${Math.random().toString(36).substring(2, 10)}`;
   try {
-    // 1. IP-level rate limiting (5 inquiries per 60 seconds)
+    // 1. IP-level rate limiting (max 5 requests per 15 minutes per IP address)
     const clientIp = getClientIp(req);
     const ipCheck = rateLimiter.check(
       `ip:${clientIp}`,
-      { windowMs: 60 * 1000, maxRequests: 5 },
-      "Too many requests from this IP address. Please wait before submitting another inquiry.",
+      { windowMs: 15 * 60 * 1000, maxRequests: 5 },
+      "Too many inquiries submitted from this IP address. Rate limit exceeded. Please wait 15 minutes before submitting another inquiry.",
     );
 
     if (!ipCheck.success) {
@@ -56,10 +56,10 @@ export async function POST(req: NextRequest) {
     const data = await parseJsonBody(req, contactSchema);
     const normalizedEmail = data.companyEmail.toLowerCase().trim();
 
-    // 3. Email-level rate limiting (3 inquiries per 10 minutes)
+    // 3. Email-level rate limiting (max 3 inquiries per 15 minutes)
     const emailCheck = rateLimiter.check(
       `email:${normalizedEmail}`,
-      { windowMs: 10 * 60 * 1000, maxRequests: 3 },
+      { windowMs: 15 * 60 * 1000, maxRequests: 3 },
       "Too many inquiries submitted for this email address. Please allow our partners time to respond.",
     );
 
