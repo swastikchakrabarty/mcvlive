@@ -1,6 +1,9 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
 import { apiSuccess, apiError, parseJsonBody } from "@/common/utils/api-response";
+import { rateLimiter, getClientIp } from "@/common/security/rate-limiter";
+import { RateLimitError } from "@/common/errors";
+import { logger } from "@/common/logger";
 
 export const contactSchema = z.object({
   businessName: z
@@ -26,18 +29,61 @@ export const contactSchema = z.object({
 export type ContactInput = z.infer<typeof contactSchema>;
 
 export async function POST(req: NextRequest) {
+  const requestId = `req_${Math.random().toString(36).substring(2, 10)}`;
   try {
-    const data = await parseJsonBody(req, contactSchema);
+    // 1. IP-level rate limiting (5 inquiries per 60 seconds)
+    const clientIp = getClientIp(req);
+    const ipCheck = rateLimiter.check(
+      `ip:${clientIp}`,
+      { windowMs: 60 * 1000, maxRequests: 5 },
+      "Too many requests from this IP address. Please wait before submitting another inquiry.",
+    );
 
-    // Generate unique inquiry reference tracking ID
+    if (!ipCheck.success) {
+      logger.security(
+        "RATE_LIMIT_BLOCKED_IP",
+        "Abuse defense: IP rate limit exceeded",
+        { clientIp, retryAfter: ipCheck.retryAfter },
+        requestId,
+      );
+      throw new RateLimitError(ipCheck.reason, ipCheck.retryAfter, {
+        retryAfter: ipCheck.retryAfter,
+        limit: ipCheck.limit,
+      });
+    }
+
+    // 2. Validate request payload
+    const data = await parseJsonBody(req, contactSchema);
+    const normalizedEmail = data.companyEmail.toLowerCase().trim();
+
+    // 3. Email-level rate limiting (3 inquiries per 10 minutes)
+    const emailCheck = rateLimiter.check(
+      `email:${normalizedEmail}`,
+      { windowMs: 10 * 60 * 1000, maxRequests: 3 },
+      "Too many inquiries submitted for this email address. Please allow our partners time to respond.",
+    );
+
+    if (!emailCheck.success) {
+      logger.security(
+        "RATE_LIMIT_BLOCKED_EMAIL",
+        "Abuse defense: Email rate limit exceeded",
+        { companyEmail: normalizedEmail, retryAfter: emailCheck.retryAfter },
+        requestId,
+      );
+      throw new RateLimitError(emailCheck.reason, emailCheck.retryAfter, {
+        retryAfter: emailCheck.retryAfter,
+        limit: emailCheck.limit,
+      });
+    }
+
+    // 4. Generate unique inquiry reference tracking ID
     const referenceId = `MCV-LEAD-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
     const receivedAt = new Date().toISOString();
 
-    // Log structured corporate lead event (safe, no secrets)
-    console.info(
-      JSON.stringify({
-        level: "INFO",
-        type: "INQUIRY_REGISTERED",
+    // 5. Emit structured JSON audit log with PII redaction
+    logger.info(
+      "INQUIRY_REGISTERED",
+      {
         referenceId,
         businessName: data.businessName,
         ownerName: data.ownerName,
@@ -46,7 +92,9 @@ export async function POST(req: NextRequest) {
         tierSelected: data.tierSelected || "Not specified",
         receivedAt,
         destination: "info@morelandchambers.com",
-      }),
+        clientIp,
+      },
+      requestId,
     );
 
     return apiSuccess(
@@ -64,10 +112,10 @@ export async function POST(req: NextRequest) {
           tierSelected: data.tierSelected || null,
         },
       },
-      undefined,
+      { requestId },
       201,
     );
   } catch (err: unknown) {
-    return apiError(err);
+    return apiError(err, undefined, undefined, requestId);
   }
 }

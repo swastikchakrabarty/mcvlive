@@ -75,3 +75,18 @@ export class InternalServerError extends AppError {
     super(message, false, details);
   }
 }
+
+export class RateLimitError extends AppError {
+  public readonly statusCode = 429;
+  public readonly errorCode = "RATE_LIMIT_EXCEEDED";
+  public readonly retryAfterSeconds: number;
+
+  constructor(
+    message = "Too many requests. Rate limit exceeded. Please try again later.",
+    retryAfterSeconds = 60,
+    details?: unknown,
+  ) {
+    super(message, true, details);
+    this.retryAfterSeconds = retryAfterSeconds;
+  }
+}

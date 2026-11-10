@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { AppError, ValidationError } from "@/common/errors";
+import { AppError, ValidationError, RateLimitError } from "@/common/errors";
+import { logger } from "@/common/logger";
 
 export interface StandardMeta {
   timestamp: string;
@@ -35,10 +36,36 @@ export function apiSuccess<T>(data: T, meta?: Partial<StandardMeta>, status = 20
  * Produces a standardized JSON error response envelope.
  * Guarantees zero internal stack trace exposure.
  */
-export function apiError(error: unknown, statusOverride?: number): NextResponse {
+export function apiError(
+  error: unknown,
+  statusOverride?: number,
+  customHeaders?: Record<string, string>,
+  requestId?: string,
+): NextResponse {
   const timestamp = new Date().toISOString();
+  const responseHeaders = new Headers(customHeaders);
 
-  // 1. Known Application Error (AppError hierarchy)
+  // 1. Rate Limiting Error (Layer 11)
+  if (error instanceof RateLimitError) {
+    responseHeaders.set("Retry-After", error.retryAfterSeconds.toString());
+    responseHeaders.set("X-RateLimit-Remaining", "0");
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: {
+          code: error.errorCode,
+          message: error.message,
+          ...(error.details ? { details: error.details } : {}),
+          timestamp,
+        },
+        meta: requestId ? { requestId, timestamp } : undefined,
+      },
+      { status: 429, headers: responseHeaders },
+    );
+  }
+
+  // 2. Known Application Error (AppError hierarchy)
   if (error instanceof AppError) {
     return NextResponse.json(
       {
@@ -49,12 +76,13 @@ export function apiError(error: unknown, statusOverride?: number): NextResponse 
           ...(error.details ? { details: error.details } : {}),
           timestamp,
         },
+        meta: requestId ? { requestId, timestamp } : undefined,
       },
-      { status: statusOverride || error.statusCode },
+      { status: statusOverride || error.statusCode, headers: responseHeaders },
     );
   }
 
-  // 2. Direct Zod Validation Error
+  // 3. Direct Zod Validation Error
   if (error instanceof z.ZodError) {
     const details = error.issues.map((issue) => ({
       field: issue.path.join(".") || "body",
@@ -70,12 +98,13 @@ export function apiError(error: unknown, statusOverride?: number): NextResponse 
           details,
           timestamp,
         },
+        meta: requestId ? { requestId, timestamp } : undefined,
       },
-      { status: 400 },
+      { status: 400, headers: responseHeaders },
     );
   }
 
-  // 3. JSON Parsing Syntax Error (Malformed/Garbage Body)
+  // 4. JSON Parsing Syntax Error (Malformed/Garbage Body)
   if (error instanceof SyntaxError) {
     return NextResponse.json(
       {
@@ -85,13 +114,14 @@ export function apiError(error: unknown, statusOverride?: number): NextResponse 
           message: "Malformed JSON payload: The request body could not be parsed as valid JSON",
           timestamp,
         },
+        meta: requestId ? { requestId, timestamp } : undefined,
       },
-      { status: 400 },
+      { status: 400, headers: responseHeaders },
     );
   }
 
-  // 4. Generic / Unhandled Internal Error
-  console.error("Unhandled internal server error:", error);
+  // 5. Generic / Unhandled Internal Error
+  logger.error("UNHANDLED_INTERNAL_ERROR", error, undefined, requestId);
 
   return NextResponse.json(
     {
@@ -101,8 +131,9 @@ export function apiError(error: unknown, statusOverride?: number): NextResponse 
         message: "An unexpected internal error occurred. Please try again later.",
         timestamp,
       },
+      meta: requestId ? { requestId, timestamp } : undefined,
     },
-    { status: statusOverride || 500 },
+    { status: statusOverride || 500, headers: responseHeaders },
   );
 }
 

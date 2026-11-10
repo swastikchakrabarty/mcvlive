@@ -44,7 +44,7 @@ export const BILLING_TIERS: BillingTier[] = [
     name: "E-Commerce Store",
     price: "$800",
     currency: "USD",
-    badge: "Priority Deployment",
+    badge: "Most Popular",
     subtitle: "Full Commerce & Inventory Architecture",
     terms: "Fixed Investment · Non-Negotiable",
     cadence: "Turnkey Commercial Engine",

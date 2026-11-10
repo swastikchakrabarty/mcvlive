@@ -5,6 +5,10 @@ import type { NextRequest } from "next/server";
 const PUBLIC_PATHS = [
   "/api/health",
   "/api/health/live",
+  "/api/contact",
+  "/api/billing/webhook",
+  "/sitemap.xml",
+  "/robots.txt",
   "/sign-in",
   "/sign-up",
   "/_next",

@@ -299,4 +299,84 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
       expect(tier3?.highlights.some((h) => h.includes("audit logs"))).toBe(true);
     });
   });
+
+  describe("Playbook Layer 10: Production Security Response Headers", () => {
+    it("configures strict security response headers in next.config.ts", async () => {
+      const nextConfigModule = await import("../next.config");
+      const nextConfig = nextConfigModule.default;
+
+      expect(nextConfig.headers).toBeDefined();
+      if (nextConfig.headers) {
+        const headerRules = await nextConfig.headers();
+        const globalRule = headerRules.find((r: { source: string }) => r.source === "/(.*)");
+        expect(globalRule).toBeDefined();
+
+        if (globalRule && globalRule.headers) {
+          const headersMap = new Map<string, string>(
+            globalRule.headers.map((h: { key: string; value: string }) => [h.key, h.value]),
+          );
+
+          // 1. Content Security Policy
+          expect(headersMap.has("Content-Security-Policy")).toBe(true);
+          const csp = headersMap.get("Content-Security-Policy") || "";
+          expect(csp).toContain("default-src 'self'");
+          expect(csp).toContain("frame-ancestors 'none'");
+
+          // 2. Strict-Transport-Security (HSTS)
+          expect(headersMap.has("Strict-Transport-Security")).toBe(true);
+          expect(headersMap.get("Strict-Transport-Security")).toContain("max-age=63072000");
+
+          // 3. X-Frame-Options
+          expect(headersMap.get("X-Frame-Options")).toBe("DENY");
+
+          // 4. X-Content-Type-Options
+          expect(headersMap.get("X-Content-Type-Options")).toBe("nosniff");
+
+          // 5. Referrer-Policy
+          expect(headersMap.get("Referrer-Policy")).toBe("strict-origin-when-cross-origin");
+
+          // 6. Permissions-Policy
+          expect(headersMap.has("Permissions-Policy")).toBe(true);
+        }
+      }
+    });
+  });
+
+  describe("Playbook Layer 16: Automated SEO, Dynamic Sitemap & Robots Configuration", () => {
+    it("generates valid dynamic sitemap with canonical domain and public routes", async () => {
+      const sitemapModule = await import("@/app/sitemap");
+      const sitemap = sitemapModule.default();
+
+      expect(Array.isArray(sitemap)).toBe(true);
+      expect(sitemap.length).toBeGreaterThanOrEqual(3);
+
+      const urls = sitemap.map((entry) => entry.url);
+      expect(
+        urls.some(
+          (u) =>
+            u === "https://morelandchambersvector.com" || u.includes("morelandchambersvector.com"),
+        ),
+      ).toBe(true);
+      expect(urls.some((u) => u.includes("/design"))).toBe(true);
+      expect(urls.some((u) => u.includes("/dashboard"))).toBe(true);
+
+      for (const entry of sitemap) {
+        expect(entry.lastModified).toBeDefined();
+        expect(entry.changeFrequency).toBeDefined();
+        expect(entry.priority).toBeDefined();
+      }
+    });
+
+    it("generates production robots.txt allowing public paths and blocking private API endpoints", async () => {
+      const robotsModule = await import("@/app/robots");
+      const robots = robotsModule.default();
+
+      expect(robots.rules).toBeDefined();
+      const rules = Array.isArray(robots.rules) ? robots.rules[0] : robots.rules;
+      expect(rules).toBeDefined();
+      expect(rules?.allow).toContain("/");
+      expect(rules?.disallow).toContain("/api/");
+      expect(robots.sitemap).toContain("/sitemap.xml");
+    });
+  });
 });
