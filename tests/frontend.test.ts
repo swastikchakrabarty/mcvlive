@@ -251,4 +251,52 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
       expect(cssContent).toContain(".ambient-footer-glow");
     });
   });
+
+  describe("Fixed Market Pricing & Billing Tiers Architecture", () => {
+    it("verifies Tier 1 ($200 USD), Tier 2 ($800 USD), and Tier 3 ($2,500 USD fixed)", async () => {
+      const { BILLING_TIERS } = await import("@/components/luxury/billing-tiers");
+
+      // Verify Tier 1: Landing Page ($200 USD)
+      const tier1 = BILLING_TIERS.find((t) => t.id === "landing_page");
+      expect(tier1).toBeDefined();
+      expect(tier1?.price).toBe("$200");
+      expect(tier1?.currency).toBe("USD");
+      expect(
+        tier1?.highlights.some((h) => h.includes("High-conversion bespoke single-page storefront")),
+      ).toBe(true);
+      expect(tier1?.highlights.some((h) => h.includes("SSL/TLS"))).toBe(true);
+      expect(tier1?.highlights.some((h) => h.includes("DDoS"))).toBe(true);
+      expect(
+        tier1?.highlights.some((h) => h.includes("sub-100ms") || h.includes("Sub-100ms")),
+      ).toBe(true);
+      expect(tier1?.highlights.some((h) => h.includes("Zod-validated"))).toBe(true);
+
+      // Verify Tier 2: E-Commerce Store ($800 USD)
+      const tier2 = BILLING_TIERS.find((t) => t.id === "ecommerce_store");
+      expect(tier2).toBeDefined();
+      expect(tier2?.price).toBe("$800");
+      expect(tier2?.currency).toBe("USD");
+      expect(tier2?.isPriority).toBe(true);
+      expect(tier2?.highlights.some((h) => h.includes("Full product catalog"))).toBe(true);
+      expect(tier2?.highlights.some((h) => h.includes("Stripe & PayPal"))).toBe(true);
+      expect(tier2?.highlights.some((h) => h.includes("inventory tracking"))).toBe(true);
+      expect(tier2?.highlights.some((h) => h.includes("PostgreSQL"))).toBe(true);
+
+      // Verify Tier 3: Complete Enterprise System ($2,500 USD fixed)
+      const tier3 = BILLING_TIERS.find((t) => t.id === "complete_enterprise");
+      expect(tier3).toBeDefined();
+      expect(tier3?.price).toBe("$2,500");
+      expect(tier3?.currency).toBe("USD");
+      expect(tier3?.price.includes("-")).toBe(false); // No range permitted
+      expect(tier3?.highlights.some((h) => h.includes("RBAC"))).toBe(true);
+      expect(tier3?.highlights.some((h) => h.includes("admin dashboard"))).toBe(true);
+      expect(
+        tier3?.highlights.some(
+          (h) => h.includes("hospital, library") || h.includes("management modules"),
+        ),
+      ).toBe(true);
+      expect(tier3?.highlights.some((h) => h.includes("AES-256"))).toBe(true);
+      expect(tier3?.highlights.some((h) => h.includes("audit logs"))).toBe(true);
+    });
+  });
 });

@@ -69,4 +69,28 @@ describe("Contact Ingress API (/api/contact)", () => {
     expect(body.success).toBe(false);
     expect(body.error.code).toBe("BAD_REQUEST");
   });
+
+  it("should process fixed pricing tier inquiries (Tier 1 $200, Tier 2 $800, Tier 3 $2,500)", async () => {
+    const enterpriseTierPayload = {
+      businessName: "Metropolitan Healthcare Consortium",
+      ownerName: "Dr. Eleanor Vance",
+      companyEmail: "e.vance@metrohealth.org",
+      budget: "$2,500 USD (Tier 3: Complete Enterprise System)",
+      tierSelected: "complete_enterprise",
+      message: "Need hospital patient management and RBAC access control system.",
+    };
+
+    const req = new NextRequest("http://localhost:3000/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(enterpriseTierPayload),
+    });
+
+    const res = await contactHandler(req);
+    expect(res.status).toBe(201);
+
+    const body = await res.json();
+    expect(body.success).toBe(true);
+    expect(body.data.details.budget).toBe("$2,500 USD (Tier 3: Complete Enterprise System)");
+  });
 });

@@ -24,24 +24,45 @@ interface FormErrors {
   budget?: string;
 }
 
-const BUDGET_OPTIONS = [
-  "$15,000 – $30,000 (Standard Corporate Architecture)",
-  "$30,000 – $60,000 (High-Throughput Web Application)",
-  "$60,000 – $150,000 (Multi-Tenant Institutional System)",
-  "$150,000+ (Custom Sovereign VPC / Enterprise Infrastructure)",
-  "Bespoke / Discussed on Call",
+export const TIER_BUDGET_MAP: Record<string, string> = {
+  landing_page: "$200 USD (Tier 1: Bespoke Landing Page)",
+  ecommerce_store: "$800 USD (Tier 2: E-Commerce Store)",
+  complete_enterprise: "$2,500 USD (Tier 3: Complete Enterprise System)",
+};
+
+export const BUDGET_OPTIONS = [
+  "$200 USD (Tier 1: Bespoke Landing Page)",
+  "$800 USD (Tier 2: E-Commerce Store)",
+  "$2,500 USD (Tier 3: Complete Enterprise System)",
+  "$2,500+ USD (Custom Scaling Infrastructure)",
 ];
 
 export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
   const { toast } = useToast();
+  const [prevTier, setPrevTier] = useState(initialTier);
   const [formData, setFormData] = useState<FormState>({
     businessName: "",
     ownerName: "",
     companyEmail: "",
-    budget: BUDGET_OPTIONS[1]!,
-    tierSelected: initialTier || "100_advance",
+    budget:
+      initialTier && TIER_BUDGET_MAP[initialTier]
+        ? TIER_BUDGET_MAP[initialTier]
+        : BUDGET_OPTIONS[1]!,
+    tierSelected: initialTier || "ecommerce_store",
     message: "",
   });
+
+  // Adjust state during render when initialTier prop changes from parent pricing selection
+  if (initialTier !== prevTier) {
+    setPrevTier(initialTier);
+    if (initialTier) {
+      setFormData((prev) => ({
+        ...prev,
+        tierSelected: initialTier,
+        budget: TIER_BUDGET_MAP[initialTier] ?? prev.budget,
+      }));
+    }
+  }
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -162,7 +183,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
                 ownerName: "",
                 companyEmail: "",
                 budget: BUDGET_OPTIONS[1]!,
-                tierSelected: "100_advance",
+                tierSelected: "ecommerce_store",
                 message: "",
               });
             }}
@@ -183,9 +204,28 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
       className="rounded-3xl border border-[#E6C594]/35 bg-[#121216]/85 p-8 sm:p-12 shadow-[0_0_40px_rgba(230,197,148,0.12)] backdrop-blur-2xl space-y-8"
     >
       <div className="space-y-2 border-b border-[#E6C594]/20 pb-6">
-        <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#F3D5A0] font-semibold block">
-          Direct Acquisition Channel
-        </span>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#F3D5A0] font-semibold block">
+            Direct Acquisition Channel
+          </span>
+          {formData.tierSelected && (
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#E6C594]/40 bg-[#0A0A0C] px-3.5 py-1 text-[11px] font-mono text-[#F3D5A0] shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E6C594] animate-pulse" />
+              <span>
+                Pre-Selected:{" "}
+                <strong className="text-white font-medium">
+                  {formData.tierSelected === "landing_page"
+                    ? "Tier 1: Landing Page ($200 USD)"
+                    : formData.tierSelected === "ecommerce_store"
+                      ? "Tier 2: E-Commerce Store ($800 USD)"
+                      : formData.tierSelected === "complete_enterprise"
+                        ? "Tier 3: Complete Enterprise System ($2,500 USD)"
+                        : formData.tierSelected}
+                </strong>
+              </span>
+            </div>
+          )}
+        </div>
         <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-white">
           Initiate Executive Discussion
         </h3>

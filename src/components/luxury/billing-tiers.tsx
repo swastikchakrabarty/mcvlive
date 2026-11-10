@@ -6,6 +6,8 @@ import { ArrowRightIcon } from "@/components/ui/icons";
 export interface BillingTier {
   id: string;
   name: string;
+  price: string;
+  currency: string;
   badge?: string;
   subtitle: string;
   terms: string;
@@ -16,71 +18,81 @@ export interface BillingTier {
   isPriority?: boolean;
 }
 
-const BILLING_TIERS: BillingTier[] = [
+export const BILLING_TIERS: BillingTier[] = [
   {
-    id: "50_advance",
-    name: "50% Advance",
-    subtitle: "Milestone-Based Execution",
-    terms: "50% Upon Mobilization / 50% Upon Acceptance",
-    cadence: "Structured Phase Delivery",
+    id: "landing_page",
+    name: "Landing Page",
+    price: "$200",
+    currency: "USD",
+    subtitle: "Bespoke Single-Page Storefront",
+    terms: "Fixed Investment · Non-Negotiable",
+    cadence: "Sub-100ms Edge Ingress",
     description:
-      "A balanced, milestone-governed capital structure. Engineered for established corporate teams requiring phased validation, sequential sprint approvals, and formal acceptance protocols before production deployment.",
+      "A high-conversion bespoke single-page storefront engineered to capture customer interest instantly, establish institutional authority, and eliminate bounce rates with sub-100ms global edge delivery.",
     highlights: [
-      "50% mobilization retainer to initiate technical architecture sprint",
-      "50% upon final acceptance testing & verified production cutover",
-      "Bi-weekly sprint demonstrations & architecture governance reviews",
-      "Dedicated senior engineering team & direct Slack/Signal bridge",
-      "Immutable source code handover & sovereign cloud infrastructure documentation",
-      "30-day post-launch warranty, performance optimization & bug-free guarantee",
+      "High-conversion bespoke single-page storefront",
+      "SSL/TLS hardening & advanced security headers",
+      "Enterprise DDoS protection & bot mitigation",
+      "Sub-100ms global edge delivery (Next.js SSR)",
+      "Zod-validated contact acquisition & lead capture",
+      "Mobile-first responsive glassmorphic architecture",
     ],
-    ctaLabel: "Select Milestone Structure",
+    ctaLabel: "Select Landing Page",
   },
   {
-    id: "100_advance",
-    name: "100% Payment in Advance",
-    badge: "Instant Priority Deployment",
-    subtitle: "Expedited Velocity & Immediate Mobilization",
-    terms: "100% Upfront Settlement",
-    cadence: "10% Preferred Cash Optimization",
+    id: "ecommerce_store",
+    name: "E-Commerce Store",
+    price: "$800",
+    currency: "USD",
+    badge: "Priority Deployment",
+    subtitle: "Full Commerce & Inventory Architecture",
+    terms: "Fixed Investment · Non-Negotiable",
+    cadence: "Turnkey Commercial Engine",
     description:
-      "Our most accelerated engagement protocol. Full upfront capital allocation unlocks instantaneous day-one mobilization, dedicated Principal Architect immersion, parallel sprint execution, and priority infrastructure queue placement.",
+      "A full-scale transactional digital storefront built for high conversion, frictionless purchasing, automated inventory control, and enterprise payment orchestration across global currencies.",
     highlights: [
-      "10% preferred institutional cash discount applied to total contract",
-      "Guaranteed day-one mobilization with zero queue lag",
-      "Dedicated Principal Systems Architect and senior engineering squad",
-      "Continuous live staging environment with daily automated test builds",
-      "Accelerated delivery timeline with parallelized full-stack sprints",
-      "90-day extended VIP post-launch warranty with 24/7 emergency response SLA",
+      "Full product catalog with instant search & filtering",
+      "Secure payment gateways (Stripe & PayPal integrations)",
+      "Automated real-time inventory tracking & stock alerts",
+      "Robust PostgreSQL database architecture & schema",
+      "Ongoing infrastructure maintenance & security patches",
+      "Zero-latency cart checkout & transaction state synchronization",
     ],
-    ctaLabel: "Select Priority Deployment",
+    ctaLabel: "Select E-Commerce Store",
     isPriority: true,
   },
   {
-    id: "phone_discussion",
-    name: "Discussed on the Phone",
-    subtitle: "Custom Enterprise Scope",
-    terms: "Custom Governance & Retainer Terms",
-    cadence: "Tailored to Enterprise Scale",
+    id: "complete_enterprise",
+    name: "Complete Enterprise System",
+    price: "$2,500",
+    currency: "USD",
+    subtitle: "Mission-Critical Sovereign Architecture",
+    terms: "Fixed Investment · Non-Negotiable",
+    cadence: "Institutional Production System",
     description:
-      "A bespoke contractual framework tailored for complex multi-jurisdiction requirements, high-throughput vector clusters, regulatory compliance vaults, or ongoing enterprise architectural retainers.",
+      "Comprehensive, mission-critical digital infrastructure engineered with military-grade encryption, granular access control, dedicated management modules, and automated compliance auditing.",
     highlights: [
-      "Private executive architecture discovery call with Senior Partners",
-      "Custom Master Services Agreement (MSA) & customized SLA covenants",
-      "Flexible milestone distributions, equity partnerships, or revenue-share models",
-      "Dedicated private VPC, sovereign bare-metal, or on-premise installation",
-      "Cross-border multi-region failover (London · Zurich · New York · Singapore)",
-      "Ongoing long-term retainers & continuous solutions engineering advisory",
+      "Multi-role access control (RBAC: Owner, Admin, Member, Viewer)",
+      "Dedicated admin dashboard & administrative portal",
+      "Logistics/management modules (e.g. hospital/library systems)",
+      "Military-grade data encryption at rest & in transit (AES-256)",
+      "Automated immutable audit logs & compliance telemetry",
+      "PostgreSQL Row-Level Security (RLS) & Anti-BOLA authorization",
     ],
-    ctaLabel: "Schedule Executive Call",
+    ctaLabel: "Select Enterprise System",
   },
 ];
 
 interface BillingTiersProps {
   onSelectTier?: (tierId: string) => void;
+  selectedTierId?: string;
 }
 
-export function LuxuryBillingTiers({ onSelectTier }: BillingTiersProps) {
-  const [activeTierId, setActiveTierId] = useState<string>("100_advance");
+export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTiersProps) {
+  const [activeTierId, setActiveTierId] = useState<string>(selectedTierId || "ecommerce_store");
+
+  // Keep internal state aligned if parent passes selectedTierId
+  const currentActiveId = selectedTierId || activeTierId;
 
   const handleSelect = (tierId: string) => {
     setActiveTierId(tierId);
@@ -98,7 +110,7 @@ export function LuxuryBillingTiers({ onSelectTier }: BillingTiersProps) {
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-[#E6C594]/40 bg-[#121216]/90 px-4 py-1.5 text-[11px] uppercase tracking-[0.25em] font-semibold text-[#F3D5A0] shadow-[0_0_20px_rgba(230,197,148,0.15)]">
-          <span>Billing Systems & Engagement Models</span>
+          <span>Fixed Market Pricing & Architecture Tiers</span>
         </div>
         <h2
           id="billing-heading"
@@ -107,20 +119,20 @@ export function LuxuryBillingTiers({ onSelectTier }: BillingTiersProps) {
           Predictable Capital Allocation
         </h2>
         <p className="text-sm sm:text-base text-[#A0A0B0] font-light max-w-2xl mx-auto leading-relaxed">
-          Transparent, institutional billing structures engineered to align velocity, risk
-          management, and technical excellence. Select the engagement model suited to your capital
-          strategy.
+          Transparent, non-negotiable capital allocations engineered for maximum conversion,
+          sovereign security, and technical excellence. Select the engagement tier tailored to your
+          scale.
         </p>
       </div>
 
       {/* 3 Tier Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
         {BILLING_TIERS.map((tier) => {
-          const isSelected = activeTierId === tier.id;
+          const isSelected = currentActiveId === tier.id;
           return (
             <div
               key={tier.id}
-              onClick={() => setActiveTierId(tier.id)}
+              onClick={() => handleSelect(tier.id)}
               className={`relative flex flex-col justify-between rounded-3xl p-8 sm:p-9 transition-all duration-300 cursor-pointer ${
                 tier.isPriority
                   ? "backdrop-blur-2xl bg-[#16161D]/90 border-2 border-[#E6C594] shadow-[0_0_50px_rgba(230,197,148,0.22)] lg:-translate-y-2 ring-1 ring-[#F3D5A0]/40"
@@ -139,15 +151,27 @@ export function LuxuryBillingTiers({ onSelectTier }: BillingTiersProps) {
               )}
 
               <div className="space-y-6">
-                {/* Header */}
-                <div className="space-y-1.5 border-b border-[#E6C594]/20 pb-5">
+                {/* Header with Subtitle, Title & Fixed Investment Amount */}
+                <div className="space-y-2 border-b border-[#E6C594]/20 pb-5">
                   <span className="text-[10px] uppercase font-mono tracking-[0.22em] text-[#F3D5A0] font-semibold block">
                     {tier.subtitle}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-white">
                     {tier.name}
                   </h3>
-                  <div className="pt-2 flex flex-col gap-0.5">
+
+                  {/* Prominent Fixed Investment Price Display */}
+                  <div className="pt-2 flex items-baseline gap-2">
+                    <span className="text-4xl sm:text-5xl font-extralight tracking-tight text-white font-mono">
+                      {tier.price}
+                    </span>
+                    <span className="text-xs font-mono uppercase tracking-widest text-[#E6C594] font-semibold">
+                      {tier.currency}
+                    </span>
+                    <span className="text-[11px] text-[#A0A0B0] font-light">· Fixed Amount</span>
+                  </div>
+
+                  <div className="pt-1 flex flex-col gap-0.5">
                     <span className="text-xs font-medium text-white">{tier.terms}</span>
                     <span className="text-[11px] text-[#A0A0B0] font-light">{tier.cadence}</span>
                   </div>
@@ -161,7 +185,7 @@ export function LuxuryBillingTiers({ onSelectTier }: BillingTiersProps) {
                 {/* Checklist with sophisticated gold checkmarks */}
                 <div className="space-y-3 pt-2">
                   <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#E6C594]/80 block font-semibold">
-                    Inclusions & Guarantees
+                    Core Architectural Scope
                   </span>
                   <ul className="space-y-3">
                     {tier.highlights.map((item, idx) => (

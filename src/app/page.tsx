@@ -7,7 +7,7 @@ import { LuxuryContactForm } from "@/components/luxury/luxury-contact-form";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
 export default function LuxuryHomePage() {
-  const [selectedTier, setSelectedTier] = useState<string>("100_advance");
+  const [selectedTier, setSelectedTier] = useState<string>("ecommerce_store");
 
   return (
     <div className="relative min-h-screen bg-[#0A0A0C] text-white overflow-hidden selection:bg-[#E6C594] selection:text-black">
@@ -211,8 +211,11 @@ export default function LuxuryHomePage() {
           </div>
         </section>
 
-        {/* 5. Billing Systems Section (3 Tiers) */}
-        <LuxuryBillingTiers onSelectTier={(tierId) => setSelectedTier(tierId)} />
+        {/* 5. Fixed Market Pricing & Architecture Tiers */}
+        <LuxuryBillingTiers
+          selectedTierId={selectedTier}
+          onSelectTier={(tierId) => setSelectedTier(tierId)}
+        />
 
         {/* 6. Streamlined Contact Form */}
         <section
