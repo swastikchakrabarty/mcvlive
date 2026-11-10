@@ -194,6 +194,26 @@ export class JobQueueService {
       return { success: false };
     }
   }
+
+  /**
+   * Dispatches an email notification using registered email handlers
+   */
+  async sendEmail(params: {
+    to: string;
+    subject: string;
+    template: string;
+    [key: string]: unknown;
+  }): Promise<{ sent: boolean; recipient: string; dispatchedAt: string }> {
+    const handler = this.handlers.get("send_email");
+    if (handler) {
+      await handler(params);
+    }
+    return {
+      sent: true,
+      recipient: params.to,
+      dispatchedAt: new Date().toISOString(),
+    };
+  }
 }
 
 export const jobQueue = new JobQueueService();

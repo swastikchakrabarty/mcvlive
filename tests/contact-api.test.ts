@@ -1,14 +1,31 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, beforeAll } from "vitest";
 import { NextRequest } from "next/server";
 import { POST as contactHandler } from "@/app/api/contact/route";
+import { GET as listLeadsHandler } from "@/app/api/admin/leads/route";
+import {
+  GET as getLeadDetailHandler,
+  DELETE as deleteLeadHandler,
+} from "@/app/api/admin/leads/[id]/route";
 import { rateLimiter } from "@/common/security/rate-limiter";
 import { maskEmail, maskName, sanitizeLogData } from "@/common/logger";
+import { getDb } from "@/db";
+import { leads } from "@/db/schema";
+import { runSeed } from "@/db/seed";
+import { eq } from "drizzle-orm";
 
 describe("Contact Ingress API (/api/contact) & Security Hardening", () => {
+  const db = getDb();
+  let seeded: Awaited<ReturnType<typeof runSeed>>;
+
+  beforeAll(async () => {
+    seeded = await runSeed(db);
+  });
+
   beforeEach(() => {
     rateLimiter.reset();
   });
-  it("should process a valid corporate contact inquiry and return HTTP 201", async () => {
+
+  it("should process a valid corporate contact inquiry, persist to PostgreSQL, and return HTTP 201", async () => {
     const validPayload = {
       businessName: "Apex Sovereign Holdings Ltd",
       ownerName: "Julian Morland",
@@ -35,6 +52,21 @@ describe("Contact Ingress API (/api/contact) & Security Hardening", () => {
     expect(body.data.details.businessName).toBe(validPayload.businessName);
     expect(body.data.details.ownerName).toBe(validPayload.ownerName);
     expect(body.data.details.companyEmail).toBe(validPayload.companyEmail);
+
+    // Verify PostgreSQL persistence (Pillar 1)
+    const [savedRecord] = await db
+      .select()
+      .from(leads)
+      .where(eq(leads.reference_id, body.data.referenceId));
+
+    expect(savedRecord).toBeDefined();
+    expect(savedRecord?.business_name).toBe(validPayload.businessName);
+    expect(savedRecord?.owner_name).toBe(validPayload.ownerName);
+    expect(savedRecord?.company_email).toBe(validPayload.companyEmail);
+    expect(savedRecord?.budget).toBe(validPayload.budget);
+    expect(savedRecord?.status).toBe("new");
+    expect(savedRecord?.created_at).toBeDefined();
+    expect(savedRecord?.deleted_at).toBeNull();
   });
 
   it("should return HTTP 400 with VALIDATION_ERROR when required fields are missing", async () => {
@@ -97,6 +129,14 @@ describe("Contact Ingress API (/api/contact) & Security Hardening", () => {
     const body = await res.json();
     expect(body.success).toBe(true);
     expect(body.data.details.budget).toBe("$2,500 USD (Tier 3: Complete Enterprise System)");
+
+    // Verify database record
+    const [savedRecord] = await db
+      .select()
+      .from(leads)
+      .where(eq(leads.reference_id, body.data.referenceId));
+    expect(savedRecord).toBeDefined();
+    expect(savedRecord?.tier_selected).toBe("complete_enterprise");
   });
 
   describe("Playbook Layer 11: Rate Limiting & Abuse Defense", () => {
@@ -207,6 +247,186 @@ describe("Contact Ingress API (/api/contact) & Security Hardening", () => {
       expect(sanitized.companyEmail).toBe("j***n@apexsovereign.com"); // Email masked
       expect(sanitized.stripeApiKey).toBe("[REDACTED]"); // Secret redacted
       expect(sanitized.password).toBe("[REDACTED]"); // Password redacted
+    });
+  });
+
+  describe("Pillar 3: Access Control, Anti-BOLA & Administrative Leads RBAC", () => {
+    let leadId: string;
+
+    beforeAll(async () => {
+      // Create a test lead in the database
+      const [inserted] = await db
+        .insert(leads)
+        .values({
+          reference_id: `MCV-LEAD-TEST-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+          business_name: "Audit Test Corporation",
+          owner_name: "Audit Officer",
+          company_email: "audit@testcorp.com",
+          budget: "$800 USD (Tier 2: E-Commerce Store)",
+          tier_selected: "ecommerce_store",
+          status: "new",
+        })
+        .returning();
+      leadId = inserted!.id;
+    });
+
+    it("should return HTTP 401 Unauthorized when unauthenticated", async () => {
+      const req = new NextRequest("http://localhost:3000/api/admin/leads");
+      const res = await listLeadsHandler(req);
+      expect(res.status).toBe(401);
+
+      const body = await res.json();
+      expect(body.success).toBe(false);
+      expect(body.error.code).toBe("UNAUTHORIZED");
+    });
+
+    it("should return HTTP 403 Forbidden when accessed by Member role", async () => {
+      const u_member = seeded.org1.users[2]!;
+      const orgId = seeded.org1.org.id;
+
+      const req = new NextRequest("http://localhost:3000/api/admin/leads", {
+        headers: {
+          "x-user-id": u_member.id,
+          "x-organization-id": orgId,
+        },
+      });
+
+      const res = await listLeadsHandler(req);
+      expect(res.status).toBe(403);
+
+      const body = await res.json();
+      expect(body.success).toBe(false);
+      expect(body.error.code).toBe("FORBIDDEN");
+    });
+
+    it("should return HTTP 403 Forbidden when accessed by Viewer role", async () => {
+      const u_viewer = seeded.org2.users[2]!;
+      const orgId = seeded.org2.org.id;
+
+      const req = new NextRequest("http://localhost:3000/api/admin/leads", {
+        headers: {
+          "x-user-id": u_viewer.id,
+          "x-organization-id": orgId,
+        },
+      });
+
+      const res = await listLeadsHandler(req);
+      expect(res.status).toBe(403);
+    });
+
+    it("should return HTTP 200 and list leads when accessed by Owner role", async () => {
+      const u_owner = seeded.org1.users[0]!;
+      const orgId = seeded.org1.org.id;
+
+      const req = new NextRequest("http://localhost:3000/api/admin/leads", {
+        headers: {
+          "x-user-id": u_owner.id,
+          "x-organization-id": orgId,
+        },
+      });
+
+      const res = await listLeadsHandler(req);
+      expect(res.status).toBe(200);
+
+      const body = await res.json();
+      expect(body.success).toBe(true);
+      expect(Array.isArray(body.data)).toBe(true);
+      expect(body.data.length).toBeGreaterThanOrEqual(1);
+    });
+
+    it("should return HTTP 200 and fetch lead detail when accessed by Admin role", async () => {
+      const u_admin = seeded.org1.users[1]!;
+      const orgId = seeded.org1.org.id;
+
+      const req = new NextRequest(`http://localhost:3000/api/admin/leads/${leadId}`, {
+        headers: {
+          "x-user-id": u_admin.id,
+          "x-organization-id": orgId,
+        },
+      });
+
+      const res = await getLeadDetailHandler(req, {
+        params: Promise.resolve({ id: leadId }),
+      });
+      expect(res.status).toBe(200);
+
+      const body = await res.json();
+      expect(body.success).toBe(true);
+      expect(body.data.id).toBe(leadId);
+      expect(body.data.business_name).toBe("Audit Test Corporation");
+    });
+
+    it("should return HTTP 404 for invalid or non-existent lead ID (anti-enumeration)", async () => {
+      const u_owner = seeded.org1.users[0]!;
+      const orgId = seeded.org1.org.id;
+
+      const req = new NextRequest(
+        "http://localhost:3000/api/admin/leads/00000000-0000-0000-0000-000000000000",
+        {
+          headers: {
+            "x-user-id": u_owner.id,
+            "x-organization-id": orgId,
+          },
+        },
+      );
+
+      const res = await getLeadDetailHandler(req, {
+        params: Promise.resolve({ id: "00000000-0000-0000-0000-000000000000" }),
+      });
+      expect(res.status).toBe(404);
+
+      const body = await res.json();
+      expect(body.success).toBe(false);
+      expect(body.error.code).toBe("NOT_FOUND");
+    });
+
+    it("should return HTTP 403 when Admin attempts to delete a lead (only Owner permitted)", async () => {
+      const u_admin = seeded.org1.users[1]!;
+      const orgId = seeded.org1.org.id;
+
+      const req = new NextRequest(`http://localhost:3000/api/admin/leads/${leadId}`, {
+        method: "DELETE",
+        headers: {
+          "x-user-id": u_admin.id,
+          "x-organization-id": orgId,
+        },
+      });
+
+      const res = await deleteLeadHandler(req, {
+        params: Promise.resolve({ id: leadId }),
+      });
+      expect(res.status).toBe(403);
+
+      const body = await res.json();
+      expect(body.success).toBe(false);
+      expect(body.error.code).toBe("FORBIDDEN");
+    });
+
+    it("should perform soft-delete when lead is deleted by Owner", async () => {
+      const u_owner = seeded.org1.users[0]!;
+      const orgId = seeded.org1.org.id;
+
+      const req = new NextRequest(`http://localhost:3000/api/admin/leads/${leadId}`, {
+        method: "DELETE",
+        headers: {
+          "x-user-id": u_owner.id,
+          "x-organization-id": orgId,
+        },
+      });
+
+      const res = await deleteLeadHandler(req, {
+        params: Promise.resolve({ id: leadId }),
+      });
+      expect(res.status).toBe(200);
+
+      const body = await res.json();
+      expect(body.success).toBe(true);
+      expect(body.data.deleted).toBe(true);
+
+      // Verify soft delete in database directly
+      const [inDb] = await db.select().from(leads).where(eq(leads.id, leadId));
+      expect(inDb).toBeDefined();
+      expect(inDb?.deleted_at).not.toBeNull();
     });
   });
 });

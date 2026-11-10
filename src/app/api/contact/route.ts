@@ -4,6 +4,9 @@ import { apiSuccess, apiError, parseJsonBody } from "@/common/utils/api-response
 import { rateLimiter, getClientIp } from "@/common/security/rate-limiter";
 import { RateLimitError } from "@/common/errors";
 import { logger } from "@/common/logger";
+import { db } from "@/db";
+import { leads } from "@/db/schema";
+import { jobQueue } from "@/modules/jobs/job-queue";
 
 export const contactSchema = z.object({
   businessName: z
@@ -52,11 +55,11 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 2. Validate request payload
+    // 2. Validate request payload via strict Zod schema
     const data = await parseJsonBody(req, contactSchema);
     const normalizedEmail = data.companyEmail.toLowerCase().trim();
 
-    // 3. Email-level rate limiting (max 3 inquiries per 15 minutes)
+    // 3. Email-level rate limiting (max 3 inquiries per 15 minutes per email)
     const emailCheck = rateLimiter.check(
       `email:${normalizedEmail}`,
       { windowMs: 15 * 60 * 1000, maxRequests: 3 },
@@ -80,10 +83,42 @@ export async function POST(req: NextRequest) {
     const referenceId = `MCV-LEAD-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
     const receivedAt = new Date().toISOString();
 
-    // 5. Emit structured JSON audit log with PII redaction
+    // 5. Commit record to PostgreSQL database (Pillar 1)
+    const [savedLead] = await db
+      .insert(leads)
+      .values({
+        reference_id: referenceId,
+        business_name: data.businessName,
+        owner_name: data.ownerName,
+        company_email: normalizedEmail,
+        budget: data.budget,
+        tier_selected: data.tierSelected || "100_advance",
+        message: data.message || null,
+        ip_address: clientIp,
+        status: "new",
+      })
+      .returning();
+
+    // 6. Concurrently dispatch structured notification email to info@morelandchambers.com
+    await jobQueue.sendEmail({
+      to: "info@morelandchambers.com",
+      subject: `[MCV Acquisition] New Lead: ${data.businessName} (Ref: ${referenceId})`,
+      template: "lead_acquisition_alert",
+      leadId: savedLead?.id,
+      referenceId,
+      businessName: data.businessName,
+      ownerName: data.ownerName,
+      companyEmail: normalizedEmail,
+      budget: data.budget,
+      tierSelected: data.tierSelected || "100_advance",
+      receivedAt,
+    });
+
+    // 7. Emit structured JSON audit log with automated PII redaction
     logger.info(
       "INQUIRY_REGISTERED",
       {
+        leadId: savedLead?.id,
         referenceId,
         businessName: data.businessName,
         ownerName: data.ownerName,
@@ -101,10 +136,13 @@ export async function POST(req: NextRequest) {
       {
         received: true,
         referenceId,
+        id: savedLead?.id,
         destination: "info@morelandchambers.com",
         message:
           "Inquiry successfully received. Our senior architecture partners will contact you within 24 hours.",
         details: {
+          id: savedLead?.id,
+          referenceId,
           businessName: data.businessName,
           ownerName: data.ownerName,
           companyEmail: data.companyEmail,

@@ -34,7 +34,10 @@ export type Action =
   | "billing:read"
   | "billing:manage"
   // Audit log actions
-  | "audit_log:read";
+  | "audit_log:read"
+  // B2B Leads & Inquiries actions
+  | "lead:read"
+  | "lead:delete";
 
 export interface TenantResource {
   id?: string;
@@ -84,6 +87,8 @@ const ROLE_PERMISSIONS: Record<UserRole, ReadonlySet<Action>> = {
     "billing:read",
     "billing:manage",
     "audit_log:read",
+    "lead:read",
+    "lead:delete",
   ]),
 
   admin: new Set<Action>([
@@ -108,6 +113,7 @@ const ROLE_PERMISSIONS: Record<UserRole, ReadonlySet<Action>> = {
     "storage:delete",
     "billing:read",
     "audit_log:read",
+    "lead:read",
   ]),
 
   member: new Set<Action>([

@@ -438,6 +438,43 @@ export const backgroundJobs = pgTable(
 );
 
 // =============================================================================
+// 13. LEADS / INQUIRIES (B2B Lead Acquisition & Sovereign Client Storage)
+// =============================================================================
+export const leads = pgTable(
+  "leads",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    reference_id: varchar("reference_id", { length: 50 }).notNull(),
+    business_name: varchar("business_name", { length: 100 }).notNull(),
+    owner_name: varchar("owner_name", { length: 100 }).notNull(),
+    company_email: varchar("company_email", { length: 120 }).notNull(),
+    budget: varchar("budget", { length: 100 }).notNull(),
+    tier_selected: varchar("tier_selected", { length: 100 }).default("100_advance"),
+    message: text("message"),
+    ip_address: varchar("ip_address", { length: 45 }),
+    status: varchar("status", { length: 50 }).notNull().default("new"),
+    created_at: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updated_at: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    deleted_at: timestamp("deleted_at", { withTimezone: true }),
+  },
+  (table) => [
+    uniqueIndex("leads_reference_id_idx").on(table.reference_id),
+    index("leads_company_email_idx").on(table.company_email),
+    index("leads_status_idx").on(table.status),
+    index("leads_tier_idx").on(table.tier_selected),
+    index("leads_created_at_idx").on(table.created_at),
+    index("leads_deleted_at_idx").on(table.deleted_at),
+    check(
+      "leads_status_check",
+      sql`${table.status} IN ('new', 'contacted', 'qualified', 'converted', 'archived')`,
+    ),
+  ],
+);
+
+export type Lead = typeof leads.$inferSelect;
+export type NewLead = typeof leads.$inferInsert;
+
+// =============================================================================
 // RELATIONS DEFINITIONS (Type-safe join navigations)
 // =============================================================================
 export const organizationsRelations = relations(organizations, ({ many }) => ({

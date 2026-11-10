@@ -42,6 +42,16 @@ export function apiError(
   customHeaders?: Record<string, string>,
   requestId?: string,
 ): NextResponse {
+  // Allow Next.js dynamic prerender bailouts to propagate naturally
+  if (
+    error instanceof Error &&
+    (error.message.includes("bail out of prerendering") ||
+      error.message.includes("Dynamic server usage") ||
+      (error as { digest?: string }).digest?.includes("DYNAMIC_SERVER_USAGE"))
+  ) {
+    throw error;
+  }
+
   const timestamp = new Date().toISOString();
   const responseHeaders = new Headers(customHeaders);
 
