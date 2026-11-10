@@ -1,20 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
 export function LuxuryNav() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#E6C594]/20 bg-[#0A0A0C]/85 backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] transition-all duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Monogram & Title */}
+        {/* Brand Logo & Title */}
         <Link
           href="/"
           className="flex items-center gap-3.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E6C594] rounded-sm p-1"
         >
-          <div className="w-8 h-8 rounded-none border border-[#E6C594]/60 bg-[#121216] flex items-center justify-center font-mono font-medium text-[#F3D5A0] text-xs tracking-wider shadow-[0_0_15px_rgba(230,197,148,0.25)] transition-transform duration-300 group-hover:scale-105">
-            MCV
-          </div>
+          <Image
+            src="/mcvlogo.png"
+            alt="Morland Chambers Vector Logo"
+            width={44}
+            height={34}
+            priority
+            className="h-8 sm:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_15px_rgba(230,197,148,0.3)]"
+          />
           <div className="flex flex-col">
             <span className="font-sans text-[12px] uppercase font-semibold tracking-[0.24em] text-white leading-none">
               Morland Chambers Vector

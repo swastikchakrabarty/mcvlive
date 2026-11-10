@@ -21,6 +21,11 @@ export const metadata: Metadata = {
     "Never Miss Another Customer",
   ],
   authors: [{ name: "Morland Chambers Vector" }],
+  icons: {
+    icon: "/mcvlogo.png",
+    shortcut: "/mcvlogo.png",
+    apple: "/mcvlogo.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
