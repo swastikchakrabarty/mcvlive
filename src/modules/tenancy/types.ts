@@ -22,6 +22,7 @@ export interface WorkspaceEnvironment {
   id: string;
   tenantId: string;
   name: string;
+  slug: string;
   environmentType: "production" | "staging" | "sandbox";
   apiKeyPrefix: string;
   createdAt: string;

@@ -3,11 +3,7 @@
  */
 
 export * from "./types";
-
-export interface TenancyService {
-  getTenantById(tenantId: string): Promise<import("./types").OrganizationTenant | null>;
-  listWorkspaces(tenantId: string): Promise<import("./types").WorkspaceEnvironment[]>;
-}
+export * from "./tenant-service";
 
 export const tenancyModule = {
   name: "tenancy",

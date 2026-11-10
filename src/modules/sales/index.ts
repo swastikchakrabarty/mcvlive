@@ -3,15 +3,7 @@
  */
 
 export * from "./types";
-
-export interface SalesService {
-  createQuote(params: {
-    organizationId: string;
-    productId: string;
-    seats: number;
-  }): Promise<import("./types").Quote>;
-  getLicense(licenseKey: string): Promise<import("./types").SoftwareLicense | null>;
-}
+export * from "./sales-service";
 
 export const salesModule = {
   name: "sales",
