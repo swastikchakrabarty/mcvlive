@@ -123,10 +123,10 @@ export function LuxuryBillingTiers({ onSelectTier }: BillingTiersProps) {
               onClick={() => setActiveTierId(tier.id)}
               className={`relative flex flex-col justify-between rounded-3xl p-8 sm:p-9 transition-all duration-300 cursor-pointer ${
                 tier.isPriority
-                  ? "bg-white/85 backdrop-blur-xl border-2 border-[#D4AF37] shadow-2xl shadow-amber-950/10 lg:-translate-y-2"
+                  ? "backdrop-blur-xl bg-white/75 border-2 border-[#D4AF37] shadow-xl shadow-amber-950/10 lg:-translate-y-2"
                   : isSelected
-                    ? "bg-white/80 backdrop-blur-xl border border-[#D4AF37]/80 shadow-xl shadow-amber-950/5"
-                    : "bg-white/65 backdrop-blur-md border border-[#E8E2D8] hover:border-[#D4AF37]/60 shadow-lg shadow-neutral-900/5 hover:bg-white/75"
+                    ? "backdrop-blur-xl bg-white/70 border border-[#D4AF37]/80 shadow-md shadow-amber-950/5"
+                    : "backdrop-blur-xl bg-white/60 border border-[#D4AF37]/30 shadow-sm hover:border-[#D4AF37]/70 hover:bg-white/70"
               }`}
             >
               {/* Optional Priority Badge */}

@@ -129,7 +129,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
 
   if (successResponse) {
     return (
-      <div className="rounded-3xl border border-[#D4AF37]/50 bg-white/90 p-8 sm:p-12 text-center shadow-2xl shadow-amber-950/10 backdrop-blur-xl space-y-6 animate-in fade-in duration-300">
+      <div className="rounded-3xl border border-[#D4AF37]/40 bg-white/70 p-8 sm:p-12 text-center shadow-sm backdrop-blur-xl space-y-6 animate-in fade-in duration-300">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#FAF5EB] border border-[#D4AF37]/60 text-[#8C734B]">
           <CheckIcon className="w-8 h-8" />
         </div>
@@ -180,7 +180,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
       id="contact-form"
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-3xl border border-[#E8E2D8] bg-white/75 p-8 sm:p-12 shadow-2xl shadow-neutral-900/5 backdrop-blur-xl space-y-8"
+      className="rounded-3xl border border-[#D4AF37]/30 bg-white/60 p-8 sm:p-12 shadow-sm backdrop-blur-xl space-y-8"
     >
       <div className="space-y-2 border-b border-[#E8E2D8]/80 pb-6">
         <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#8C734B] font-semibold block">

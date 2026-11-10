@@ -5,7 +5,7 @@ import { ArrowRightIcon } from "@/components/ui/icons";
 
 export function LuxuryNav() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#E8E2D8]/70 bg-[#FAF9F6]/85 backdrop-blur-md transition-all duration-200">
+    <header className="sticky top-0 z-50 w-full border-b border-[#D4AF37]/20 bg-[#F4ECE1]/85 backdrop-blur-xl transition-all duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Brand Monogram & Title */}
         <Link
@@ -48,19 +48,13 @@ export function LuxuryNav() {
           >
             Billing Systems
           </a>
-          <a
-            href="#contact"
-            className="hover:text-[#171717] transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#171717] hover:after:w-full after:transition-all"
-          >
-            Acquisition
-          </a>
         </nav>
 
         {/* Direct Action Trigger */}
         <div className="flex items-center gap-4">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/40 bg-white/90 px-4 py-2 text-[11px] uppercase font-semibold tracking-[0.2em] text-[#171717] shadow-sm hover:border-[#D4AF37] hover:bg-[#171717] hover:text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/50 bg-white/80 px-4 py-2 text-[11px] uppercase font-semibold tracking-[0.2em] text-[#171717] shadow-sm hover:border-[#D4AF37] hover:bg-[#171717] hover:text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
           >
             <span>Direct Inquiry</span>
             <ArrowRightIcon className="w-3.5 h-3.5" />

@@ -244,7 +244,7 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
       const cssPath = path.resolve(process.cwd(), "src/app/globals.css");
       const cssContent = fs.readFileSync(cssPath, "utf-8");
 
-      expect(cssContent).toContain("--luxury-base: #faf9f6");
+      expect(cssContent).toContain("--luxury-base: #f4ece1");
       expect(cssContent).toContain("--luxury-champagne: #c5a880");
       expect(cssContent).toContain(".luxury-glass");
       expect(cssContent).toContain(".ambient-hero-glow");
