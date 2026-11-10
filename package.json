@@ -21,6 +21,7 @@
     "db:seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.9.25",
     "drizzle-orm": "^0.45.4",
     "next": "16.4.6",
     "pg": "^8.23.1",

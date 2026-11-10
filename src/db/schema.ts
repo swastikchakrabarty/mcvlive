@@ -82,10 +82,7 @@ export const organizationMembers = pgTable(
     index("org_members_user_id_idx").on(table.user_id),
     index("org_members_role_idx").on(table.role),
     index("org_members_deleted_at_idx").on(table.deleted_at),
-    check(
-      "org_members_role_check",
-      sql`${table.role} IN ('org_admin', 'evaluator', 'billing', 'member')`,
-    ),
+    check("org_members_role_check", sql`${table.role} IN ('owner', 'admin', 'member', 'viewer')`),
   ],
 );
 
@@ -323,6 +320,42 @@ export const auditLogs = pgTable(
 );
 
 // =============================================================================
+// 10. INVITATIONS (Tenant-Owned Team Invitations)
+// =============================================================================
+export const invitations = pgTable(
+  "invitations",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    organization_id: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    email: varchar("email", { length: 255 }).notNull(),
+    role: varchar("role", { length: 50 }).notNull().default("member"),
+    token_hash: varchar("token_hash", { length: 255 }).notNull(),
+    invited_by: uuid("invited_by").references(() => users.id, { onDelete: "set null" }),
+    status: varchar("status", { length: 50 }).notNull().default("pending"),
+    expires_at: timestamp("expires_at", { withTimezone: true }).notNull(),
+    created_at: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updated_at: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    deleted_at: timestamp("deleted_at", { withTimezone: true }),
+  },
+  (table) => [
+    uniqueIndex("invitations_token_hash_idx").on(table.token_hash),
+    index("invitations_org_id_idx").on(table.organization_id),
+    index("invitations_email_idx").on(table.email),
+    index("invitations_status_idx").on(table.status),
+    index("invitations_expires_at_idx").on(table.expires_at),
+    index("invitations_created_at_idx").on(table.created_at),
+    index("invitations_deleted_at_idx").on(table.deleted_at),
+    check("invitations_role_check", sql`${table.role} IN ('owner', 'admin', 'member', 'viewer')`),
+    check(
+      "invitations_status_check",
+      sql`${table.status} IN ('pending', 'accepted', 'revoked', 'expired')`,
+    ),
+  ],
+);
+
+// =============================================================================
 // RELATIONS DEFINITIONS (Type-safe join navigations)
 // =============================================================================
 export const organizationsRelations = relations(organizations, ({ many }) => ({
@@ -333,6 +366,7 @@ export const organizationsRelations = relations(organizations, ({ many }) => ({
   invoices: many(invoices),
   storageFiles: many(storageFiles),
   auditLogs: many(auditLogs),
+  invitations: many(invitations),
 }));
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -408,6 +442,17 @@ export const auditLogsRelations = relations(auditLogs, ({ one }) => ({
   }),
   actor: one(users, {
     fields: [auditLogs.actor_id],
+    references: [users.id],
+  }),
+}));
+
+export const invitationsRelations = relations(invitations, ({ one }) => ({
+  organization: one(organizations, {
+    fields: [invitations.organization_id],
+    references: [organizations.id],
+  }),
+  inviter: one(users, {
+    fields: [invitations.invited_by],
     references: [users.id],
   }),
 }));

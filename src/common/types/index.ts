@@ -44,6 +44,6 @@ export interface PaginatedResult<T> {
 export interface TenantContext {
   tenantId: string;
   organizationName: string;
-  role: "admin" | "evaluator" | "billing" | "member";
+  role: "owner" | "admin" | "member" | "viewer";
   userId: string;
 }

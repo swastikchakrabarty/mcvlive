@@ -3,6 +3,9 @@
  */
 
 export * from "./types";
+export * from "./authorization";
+export * from "./auth-context";
+export * from "./team-service";
 
 export interface IdentityService {
   verifySession(token: string): Promise<import("./types").IdentitySession | null>;

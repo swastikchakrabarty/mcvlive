@@ -3,6 +3,7 @@ import {
   organizations,
   users,
   organizationMembers,
+  invitations,
   workspaces,
   quotes,
   licenses,
@@ -22,6 +23,7 @@ export async function runSeed(customDb = getDb()) {
   await customDb.delete(licenses);
   await customDb.delete(quotes);
   await customDb.delete(workspaces);
+  await customDb.delete(invitations);
   await customDb.delete(organizationMembers);
   await customDb.delete(users);
   await customDb.delete(organizations);
@@ -65,19 +67,34 @@ export async function runSeed(customDb = getDb()) {
     {
       organization_id: org1.id,
       user_id: user1_1.id,
-      role: "org_admin",
+      role: "owner",
     },
     {
       organization_id: org1.id,
       user_id: user1_2.id,
-      role: "evaluator",
+      role: "admin",
     },
     {
       organization_id: org1.id,
       user_id: user1_3.id,
-      role: "billing",
+      role: "member",
     },
   ]);
+
+  const rawInviteToken = "mcv_invite_sample_token_apex_7days";
+  const tokenHash = crypto.createHash("sha256").update(rawInviteToken).digest("hex");
+  const [sampleInvite] = await customDb
+    .insert(invitations)
+    .values({
+      organization_id: org1.id,
+      email: "candidate.engineer@apexsovereign.io",
+      role: "member",
+      token_hash: tokenHash,
+      invited_by: user1_1.id,
+      status: "pending",
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7-day expiration
+    })
+    .returning();
 
   const [ws1_prod, ws1_sandbox] = await customDb
     .insert(workspaces)
@@ -244,17 +261,17 @@ export async function runSeed(customDb = getDb()) {
     {
       organization_id: org2.id,
       user_id: user2_1.id,
-      role: "org_admin",
+      role: "owner",
     },
     {
       organization_id: org2.id,
       user_id: user2_2.id,
-      role: "evaluator",
+      role: "admin",
     },
     {
       organization_id: org2.id,
       user_id: user2_3.id,
-      role: "billing",
+      role: "viewer",
     },
   ]);
 
@@ -379,6 +396,8 @@ export async function runSeed(customDb = getDb()) {
       workspaces: [ws1_prod, ws1_sandbox],
       quote: quote1,
       license: license1,
+      invite: sampleInvite,
+      rawInviteToken,
     },
     org2: { org: org2, users: [user2_1, user2_2, user2_3] },
   };

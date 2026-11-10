@@ -2,7 +2,7 @@
  * Identity Domain Model & Types
  */
 
-export type UserRole = "superadmin" | "org_admin" | "evaluator" | "billing" | "member";
+export type UserRole = "owner" | "admin" | "member" | "viewer";
 
 export interface UserProfile {
   id: string;
