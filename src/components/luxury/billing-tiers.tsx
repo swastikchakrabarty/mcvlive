@@ -109,7 +109,7 @@ export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTier
     <section id="billing" aria-labelledby="billing-heading" className="space-y-16">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#E6C594]/40 bg-[#121216]/90 px-4 py-1.5 text-[11px] uppercase tracking-[0.25em] font-semibold text-[#F3D5A0] shadow-[0_0_20px_rgba(230,197,148,0.15)]">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/40 bg-[#09090D]/90 px-4 py-1.5 text-[11px] uppercase tracking-[0.25em] font-semibold text-[#E5C158] shadow-[0_0_25px_rgba(212,175,55,0.18)]">
           <span>Fixed Market Pricing & Architecture Tiers</span>
         </div>
         <h2
@@ -118,7 +118,7 @@ export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTier
         >
           Predictable Capital Allocation
         </h2>
-        <p className="text-sm sm:text-base text-[#A0A0B0] font-light max-w-2xl mx-auto leading-relaxed">
+        <p className="text-sm sm:text-base text-[#A8A8B8] font-light max-w-2xl mx-auto leading-relaxed">
           Transparent, non-negotiable capital allocations engineered for maximum conversion,
           sovereign security, and technical excellence. Select the engagement tier tailored to your
           scale.
@@ -135,16 +135,16 @@ export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTier
               onClick={() => handleSelect(tier.id)}
               className={`relative flex flex-col justify-between rounded-3xl p-6 sm:p-8 lg:p-9 transition-all duration-300 cursor-pointer ${
                 tier.isPriority
-                  ? "backdrop-blur-2xl bg-[#16161D]/90 border-2 border-[#E6C594] shadow-[0_0_50px_rgba(230,197,148,0.22)] lg:-translate-y-2 ring-1 ring-[#F3D5A0]/40"
+                  ? "backdrop-blur-2xl bg-[#0D0D14]/95 border-2 border-[#D4AF37] shadow-[0_0_55px_rgba(212,175,55,0.25)] lg:-translate-y-2 ring-1 ring-[#E5C158]/50"
                   : isSelected
-                    ? "backdrop-blur-xl bg-[#14141A]/90 border border-[#E6C594]/80 shadow-[0_0_40px_rgba(230,197,148,0.18)]"
-                    : "backdrop-blur-xl bg-[#121216]/80 border border-[#E6C594]/30 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.18)] hover:bg-[#16161D]"
+                    ? "backdrop-blur-xl bg-[#0B0B10]/95 border border-[#D4AF37]/90 shadow-[0_0_45px_rgba(212,175,55,0.2)]"
+                    : "backdrop-blur-xl bg-[#09090D]/85 border border-[#D4AF37]/30 shadow-[0_0_35px_rgba(212,175,55,0.08)] hover:border-[#E5C158]/70 hover:shadow-[0_0_45px_rgba(212,175,55,0.2)] hover:bg-[#0D0D14]"
               }`}
             >
               {/* Optional Priority Badge */}
               {tier.badge && (
                 <div className="absolute -top-3.5 left-8">
-                  <span className="rounded-full bg-gradient-to-r from-[#E6C594] via-[#F3D5A0] to-[#E6C594] px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.22em] text-black shadow-[0_0_20px_rgba(230,197,148,0.4)]">
+                  <span className="rounded-full bg-gradient-to-r from-[#D4AF37] via-[#FFF3D6] to-[#D4AF37] px-4 py-1 text-[10px] font-sans font-bold uppercase tracking-[0.22em] text-black shadow-[0_0_25px_rgba(212,175,55,0.45)]">
                     {tier.badge}
                   </span>
                 </div>
@@ -152,8 +152,8 @@ export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTier
 
               <div className="space-y-6">
                 {/* Header with Subtitle, Title & Fixed Investment Amount */}
-                <div className="space-y-2 border-b border-[#E6C594]/20 pb-5">
-                  <span className="text-[10px] uppercase font-mono tracking-[0.22em] text-[#F3D5A0] font-semibold block">
+                <div className="space-y-2 border-b border-[#D4AF37]/20 pb-5">
+                  <span className="text-[10px] uppercase font-mono tracking-[0.22em] text-[#E5C158] font-semibold block">
                     {tier.subtitle}
                   </span>
                   <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-white">
@@ -165,26 +165,26 @@ export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTier
                     <span className="text-4xl sm:text-5xl font-extralight tracking-tight text-white font-mono">
                       {tier.price}
                     </span>
-                    <span className="text-xs font-mono uppercase tracking-widest text-[#E6C594] font-semibold">
+                    <span className="text-xs font-mono uppercase tracking-widest text-[#D4AF37] font-semibold">
                       {tier.currency}
                     </span>
-                    <span className="text-[11px] text-[#A0A0B0] font-light">· Fixed Amount</span>
+                    <span className="text-[11px] text-[#A8A8B8] font-light">· Fixed Amount</span>
                   </div>
 
                   <div className="pt-1 flex flex-col gap-0.5">
                     <span className="text-xs font-medium text-white">{tier.terms}</span>
-                    <span className="text-[11px] text-[#A0A0B0] font-light">{tier.cadence}</span>
+                    <span className="text-[11px] text-[#A8A8B8] font-light">{tier.cadence}</span>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-[#A0A0B0] font-light leading-relaxed min-h-[56px]">
+                <p className="text-xs text-[#A8A8B8] font-light leading-relaxed min-h-[56px]">
                   {tier.description}
                 </p>
 
                 {/* Checklist with sophisticated gold checkmarks */}
                 <div className="space-y-3 pt-2">
-                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#E6C594]/80 block font-semibold">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#D4AF37]/90 block font-semibold">
                     Core Architectural Scope
                   </span>
                   <ul className="space-y-3">
@@ -193,7 +193,7 @@ export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTier
                         key={idx}
                         className="flex items-start gap-3 text-xs font-light text-white"
                       >
-                        <span className="shrink-0 mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#E6C594]/15 border border-[#E6C594]/60 text-[#F3D5A0]">
+                        <span className="shrink-0 mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/60 text-[#E5C158]">
                           <svg
                             className="w-2.5 h-2.5"
                             fill="none"
@@ -223,12 +223,12 @@ export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTier
                     e.stopPropagation();
                     handleSelect(tier.id);
                   }}
-                  className={`w-full py-3.5 px-6 rounded-full text-xs font-semibold uppercase tracking-[0.22em] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F3D5A0] ${
+                  className={`w-full py-3.5 px-6 rounded-full text-xs font-semibold uppercase tracking-[0.22em] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E5C158] ${
                     tier.isPriority
-                      ? "bg-gradient-to-r from-[#E6C594] via-[#F3D5A0] to-[#E6C594] text-black shadow-[0_0_25px_rgba(230,197,148,0.35)] hover:shadow-[0_0_40px_rgba(230,197,148,0.55)] hover:scale-[1.02]"
+                      ? "bg-gradient-to-r from-[#D4AF37] via-[#FFF3D6] to-[#D4AF37] text-black shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:shadow-[0_0_45px_rgba(229,193,88,0.65)] hover:scale-[1.02]"
                       : isSelected
-                        ? "bg-[#E6C594] text-black shadow-[0_0_20px_rgba(230,197,148,0.3)]"
-                        : "bg-[#0A0A0C]/90 text-[#F3D5A0] border border-[#E6C594]/50 hover:bg-[#E6C594] hover:text-black shadow-[0_0_15px_rgba(230,197,148,0.1)]"
+                        ? "bg-[#D4AF37] text-black shadow-[0_0_25px_rgba(212,175,55,0.35)]"
+                        : "bg-[#070709]/90 text-[#E5C158] border border-[#D4AF37]/50 hover:bg-[#D4AF37] hover:text-black shadow-[0_0_20px_rgba(212,175,55,0.12)]"
                   }`}
                 >
                   <span>{tier.ctaLabel}</span>

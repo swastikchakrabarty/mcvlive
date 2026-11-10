@@ -1,28 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  /* Dynamic Luxury Dark & Luminous Base Tokens */
-  --luxury-base: #0a0a0c;
-  --luxury-surface: #121216;
-  --luxury-surface-elevated: #181820;
-  --luxury-gold: #e6c594;
-  --luxury-gold-light: #f3d5a0;
-  --luxury-gold-border: rgba(230, 197, 148, 0.4);
-  --luxury-gold-glow: rgba(230, 197, 148, 0.15);
+  /* Pitch-Black Obsidian & 3D Metallic Gold Tokens */
+  --luxury-base: #070709;
+  --luxury-base-deep: #050507;
+  --luxury-surface: #09090d;
+  --luxury-surface-elevated: #111118;
+  --luxury-gold: #d4af37;
+  --luxury-gold-light: #e5c158;
+  --luxury-gold-shimmer: #fff3d6;
+  --luxury-gold-bronze: #b89758;
+  --luxury-gold-border: rgba(212, 175, 55, 0.4);
+  --luxury-gold-glow: rgba(212, 175, 55, 0.16);
   --luxury-text-primary: #ffffff;
-  --luxury-text-secondary: #a0a0b0;
+  --luxury-text-secondary: #a8a8b8;
   --luxury-text-muted: #6e6e80;
 
   /* Layer 5/6 Tokens preserved for compatibility */
-  --bg-dominant: #090d16;
-  --bg-dominant-elevated: #0d1322;
-  --surface-card: #111a2e;
-  --surface-card-hover: #16223b;
-  --surface-border: #1e293b;
-  --surface-border-subtle: #27354f;
-  --accent-primary: #6366f1;
-  --accent-primary-hover: #4f46e5;
-  --accent-primary-glow: rgba(99, 102, 241, 0.25);
+  --bg-dominant: #070709;
+  --bg-dominant-elevated: #09090d;
+  --surface-card: #0d0d14;
+  --surface-card-hover: #14141e;
+  --surface-border: #1f1f2e;
+  --surface-border-subtle: #29293d;
+  --accent-primary: #d4af37;
+  --accent-primary-hover: #e5c158;
+  --accent-primary-glow: rgba(212, 175, 55, 0.3);
   --accent-emerald: #10b981;
   --accent-emerald-glow: rgba(16, 185, 129, 0.2);
   --text-primary: #f8fafc;
@@ -31,7 +34,7 @@
 }
 
 body {
-  background-color: #0a0a0c;
+  background-color: #070709;
   color: #ffffff;
   font-family:
     system-ui,
@@ -48,41 +51,120 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Flashy & Luminous Glassmorphism with Glowing Gold Borders */
+/* 3D Metallic Gold Shimmer Keyframe Animation */
+@keyframes shimmer-gold {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer-gold {
+  background-size: 200% auto;
+  animation: shimmer-gold 6s linear infinite;
+}
+
+/* Slow-Pulsing Radial Glow Halos */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 7s ease-in-out infinite;
+}
+
+/* Floating Ambient Golden Particle Keyframes */
+@keyframes float-particle-1 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(-24px) translateX(12px);
+    opacity: 0.75;
+  }
+}
+
+@keyframes float-particle-2 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-32px) translateX(-16px);
+    opacity: 0.8;
+  }
+}
+
+.animate-particle-1 {
+  animation: float-particle-1 9s ease-in-out infinite;
+}
+
+.animate-particle-2 {
+  animation: float-particle-2 11s ease-in-out infinite;
+}
+
+/* Logo Hover Bloom Effect */
+.gold-glow-bloom {
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+  transition:
+    filter 0.35s ease,
+    transform 0.35s ease;
+}
+
+.gold-glow-bloom:hover {
+  filter: drop-shadow(0 0 40px rgba(229, 193, 88, 0.75))
+    drop-shadow(0 0 65px rgba(212, 175, 55, 0.4));
+  transform: scale(1.04);
+}
+
+/* Deep Obsidian Glassmorphism with Glowing Gold Borders */
 .luxury-glass {
-  background: rgba(18, 18, 22, 0.72);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(230, 197, 148, 0.35);
-  box-shadow: 0 0 30px rgba(230, 197, 148, 0.1);
+  background: rgba(9, 9, 13, 0.78);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.1);
 }
 
 .luxury-glass-gold {
-  background: rgba(24, 24, 32, 0.85);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  border: 1px solid rgba(243, 213, 160, 0.55);
+  background: rgba(13, 13, 20, 0.88);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(229, 193, 88, 0.55);
   box-shadow:
-    0 0 45px rgba(230, 197, 148, 0.2),
-    inset 0 1px 0 rgba(243, 213, 160, 0.3);
+    0 0 50px rgba(212, 175, 55, 0.22),
+    inset 0 1px 0 rgba(255, 243, 214, 0.3);
 }
 
 /* Luminous Ambient Lighting Radial Auroras */
 .ambient-hero-glow {
   background: radial-gradient(
     ellipse 85% 65% at 50% -10%,
-    rgba(230, 197, 148, 0.28),
-    rgba(243, 213, 160, 0.12) 38%,
-    rgba(10, 10, 12, 0) 75%
+    rgba(212, 175, 55, 0.28),
+    rgba(229, 193, 88, 0.12) 38%,
+    rgba(7, 7, 9, 0) 75%
   );
 }
 
 .ambient-footer-glow {
   background: radial-gradient(
     ellipse 75% 55% at 50% 110%,
-    rgba(230, 197, 148, 0.24),
-    rgba(243, 213, 160, 0.1) 45%,
-    rgba(10, 10, 12, 0) 75%
+    rgba(212, 175, 55, 0.25),
+    rgba(229, 193, 88, 0.1) 45%,
+    rgba(5, 5, 7, 0) 75%
   );
 }
 
@@ -92,14 +174,14 @@ body {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0c;
+  background: #070709;
 }
 ::-webkit-scrollbar-thumb {
-  background: #e6c594;
+  background: #d4af37;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #f3d5a0;
+  background: #e5c158;
 }
 
 /* Disable Next.js dev indicator / badge in the viewport */

@@ -193,5 +193,18 @@ describe("Final Pre-Live QA, Security & Performance Audit", () => {
       expect(navContent).toContain("width={44}");
       expect(navContent).toContain("height={34}");
     });
+
+    it("verifies pitch-black obsidian theme tokens and metallic gold animations in globals.css", () => {
+      const globalsCssPath = path.resolve(process.cwd(), "src/app/globals.css");
+      const globalsContent = fs.readFileSync(globalsCssPath, "utf-8");
+
+      expect(globalsContent).toContain("--luxury-base: #070709;");
+      expect(globalsContent).toContain("--luxury-gold: #d4af37;");
+      expect(globalsContent).toContain("animate-shimmer-gold");
+      expect(globalsContent).toContain("animate-pulse-glow");
+      expect(globalsContent).toContain("gold-glow-bloom");
+      expect(globalsContent).toContain("luxury-glass");
+    });
   });
 });
+
