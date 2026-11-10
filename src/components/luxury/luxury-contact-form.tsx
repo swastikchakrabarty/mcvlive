@@ -150,7 +150,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
 
   if (successResponse) {
     return (
-      <div className="rounded-3xl border border-[#E6C594]/60 bg-[#121216]/95 p-8 sm:p-12 text-center shadow-[0_0_50px_rgba(230,197,148,0.25)] backdrop-blur-2xl space-y-6 text-white animate-in fade-in duration-300">
+      <div className="rounded-3xl border border-[#E6C594]/60 bg-[#121216]/95 p-6 sm:p-10 lg:p-12 text-center shadow-[0_0_50px_rgba(230,197,148,0.25)] backdrop-blur-2xl space-y-6 text-white animate-in fade-in duration-300">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#E6C594]/15 border border-[#E6C594]/60 text-[#F3D5A0]">
           <CheckIcon className="w-8 h-8" />
         </div>
@@ -201,7 +201,7 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
       id="contact-form"
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-3xl border border-[#E6C594]/35 bg-[#121216]/85 p-8 sm:p-12 shadow-[0_0_40px_rgba(230,197,148,0.12)] backdrop-blur-2xl space-y-8"
+      className="rounded-3xl border border-[#E6C594]/35 bg-[#121216]/85 p-6 sm:p-10 lg:p-12 shadow-[0_0_40px_rgba(230,197,148,0.12)] backdrop-blur-2xl space-y-8"
     >
       <div className="space-y-2 border-b border-[#E6C594]/20 pb-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -209,9 +209,9 @@ export function LuxuryContactForm({ initialTier }: LuxuryContactFormProps) {
             Direct Acquisition Channel
           </span>
           {formData.tierSelected && (
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#E6C594]/40 bg-[#0A0A0C] px-3.5 py-1 text-[11px] font-mono text-[#F3D5A0] shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E6C594] animate-pulse" />
-              <span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#E6C594]/40 bg-[#0A0A0C] px-3.5 py-1 text-[11px] font-mono text-[#F3D5A0] shadow-sm max-w-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#E6C594] animate-pulse shrink-0" />
+              <span className="truncate">
                 Pre-Selected:{" "}
                 <strong className="text-white font-medium">
                   {formData.tierSelected === "landing_page"

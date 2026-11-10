@@ -70,7 +70,7 @@ export default function LuxuryHomePage() {
           </div>
 
           {/* Credibility Ribbon */}
-          <div className="pt-6 flex flex-wrap items-center justify-center gap-8 text-[11px] uppercase font-mono tracking-[0.24em] text-[#E6C594]/80">
+          <div className="pt-6 flex flex-wrap items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-[10px] sm:text-[11px] uppercase font-mono tracking-[0.2em] sm:tracking-[0.24em] text-[#E6C594]/80">
             <span>Zero Cold-Starts</span>
             <span>·</span>
             <span>Sub-5ms Execution</span>
@@ -104,7 +104,7 @@ export default function LuxuryHomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#F3D5A0] font-bold">
                 01 / Acquisition
               </span>
@@ -118,7 +118,7 @@ export default function LuxuryHomePage() {
             </div>
 
             {/* Card 2 */}
-            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#F3D5A0] font-bold">
                 02 / Conversion
               </span>
@@ -132,7 +132,7 @@ export default function LuxuryHomePage() {
             </div>
 
             {/* Card 3 */}
-            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#F3D5A0] font-bold">
                 03 / Retention
               </span>
@@ -169,7 +169,7 @@ export default function LuxuryHomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
               <h3 className="text-lg font-normal text-white uppercase tracking-wide">
                 Bespoke Corporate Websites
               </h3>
@@ -183,7 +183,7 @@ export default function LuxuryHomePage() {
               </div>
             </div>
 
-            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
               <h3 className="text-lg font-normal text-white uppercase tracking-wide">
                 Mission-Critical Web Applications
               </h3>
@@ -196,7 +196,7 @@ export default function LuxuryHomePage() {
               </div>
             </div>
 
-            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-[#121216]/80 border border-[#E6C594]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_30px_rgba(230,197,148,0.08)] hover:border-[#E6C594]/70 hover:shadow-[0_0_40px_rgba(230,197,148,0.2)] hover:-translate-y-1 transition-all duration-300">
               <h3 className="text-lg font-normal text-white uppercase tracking-wide">
                 Enterprise Vector Infrastructure
               </h3>
@@ -274,7 +274,7 @@ export default function LuxuryHomePage() {
           </div>
 
           {/* Minimalist Footnote & Global Jurisdictions */}
-          <div className="pt-10 border-t border-[#E6C594]/20 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-[#828292] font-light">
+          <div className="pt-10 border-t border-[#E6C594]/20 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-[#828292] font-light text-center sm:text-left">
             <div className="flex items-center gap-3">
               <span className="font-mono font-medium text-white tracking-wider text-xs">
                 MCV SYSTEMS

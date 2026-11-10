@@ -133,7 +133,7 @@ export function LuxuryBillingTiers({ onSelectTier, selectedTierId }: BillingTier
             <div
               key={tier.id}
               onClick={() => handleSelect(tier.id)}
-              className={`relative flex flex-col justify-between rounded-3xl p-8 sm:p-9 transition-all duration-300 cursor-pointer ${
+              className={`relative flex flex-col justify-between rounded-3xl p-6 sm:p-8 lg:p-9 transition-all duration-300 cursor-pointer ${
                 tier.isPriority
                   ? "backdrop-blur-2xl bg-[#16161D]/90 border-2 border-[#E6C594] shadow-[0_0_50px_rgba(230,197,148,0.22)] lg:-translate-y-2 ring-1 ring-[#F3D5A0]/40"
                   : isSelected

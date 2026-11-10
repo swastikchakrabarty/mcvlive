@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
         owner_name: data.ownerName,
         company_email: normalizedEmail,
         budget: data.budget,
-        tier_selected: data.tierSelected || "100_advance",
+        tier_selected: data.tierSelected || "ecommerce_store",
         message: data.message || null,
         ip_address: clientIp,
         status: "new",
