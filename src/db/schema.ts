@@ -24,6 +24,10 @@ export const organizations = pgTable(
     slug: varchar("slug", { length: 100 }).notNull(),
     status: varchar("status", { length: 50 }).notNull().default("active"),
     domain: varchar("domain", { length: 255 }),
+    subscription_tier: varchar("subscription_tier", { length: 50 }).notNull().default("starter"),
+    subscription_status: varchar("subscription_status", { length: 50 }).notNull().default("active"),
+    stripe_customer_id: varchar("stripe_customer_id", { length: 255 }),
+    stripe_subscription_id: varchar("stripe_subscription_id", { length: 255 }),
     created_at: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updated_at: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
     deleted_at: timestamp("deleted_at", { withTimezone: true }),
@@ -31,9 +35,19 @@ export const organizations = pgTable(
   (table) => [
     uniqueIndex("org_slug_idx").on(table.slug),
     index("org_status_idx").on(table.status),
+    index("org_tier_idx").on(table.subscription_tier),
+    index("org_stripe_cust_idx").on(table.stripe_customer_id),
     index("org_created_at_idx").on(table.created_at),
     index("org_deleted_at_idx").on(table.deleted_at),
     check("org_status_check", sql`${table.status} IN ('active', 'suspended', 'provisioning')`),
+    check(
+      "org_sub_tier_check",
+      sql`${table.subscription_tier} IN ('starter', 'enterprise_standard', 'vector_sovereign')`,
+    ),
+    check(
+      "org_sub_status_check",
+      sql`${table.subscription_status} IN ('trialing', 'active', 'past_due', 'canceled', 'unpaid')`,
+    ),
   ],
 );
 
@@ -356,6 +370,74 @@ export const invitations = pgTable(
 );
 
 // =============================================================================
+// 11. WEBHOOK EVENTS (Idempotent Webhook Processing Audit)
+// =============================================================================
+export const webhookEvents = pgTable(
+  "webhook_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    event_id: varchar("event_id", { length: 255 }).notNull(),
+    provider: varchar("provider", { length: 50 }).notNull().default("stripe"),
+    event_type: varchar("event_type", { length: 100 }).notNull(),
+    organization_id: uuid("organization_id").references(() => organizations.id, {
+      onDelete: "set null",
+    }),
+    status: varchar("status", { length: 50 }).notNull().default("processing"),
+    payload: jsonb("payload")
+      .notNull()
+      .default(sql`'{}'::jsonb`),
+    error_message: text("error_message"),
+    processed_at: timestamp("processed_at", { withTimezone: true }),
+    created_at: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updated_at: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("webhook_event_id_idx").on(table.event_id),
+    index("webhook_org_id_idx").on(table.organization_id),
+    index("webhook_type_idx").on(table.event_type),
+    index("webhook_created_at_idx").on(table.created_at),
+    check("webhook_status_check", sql`${table.status} IN ('processing', 'processed', 'failed')`),
+  ],
+);
+
+// =============================================================================
+// 12. BACKGROUND JOBS (Durable, Idempotent Asynchronous Queue)
+// =============================================================================
+export const backgroundJobs = pgTable(
+  "background_jobs",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    job_type: varchar("job_type", { length: 100 }).notNull(),
+    organization_id: uuid("organization_id").references(() => organizations.id, {
+      onDelete: "cascade",
+    }),
+    idempotency_key: varchar("idempotency_key", { length: 255 }).notNull(),
+    payload: jsonb("payload")
+      .notNull()
+      .default(sql`'{}'::jsonb`),
+    status: varchar("status", { length: 50 }).notNull().default("pending"),
+    attempts: integer("attempts").notNull().default(0),
+    max_attempts: integer("max_attempts").notNull().default(3),
+    last_error: text("last_error"),
+    scheduled_for: timestamp("scheduled_for", { withTimezone: true }).notNull().defaultNow(),
+    locked_at: timestamp("locked_at", { withTimezone: true }),
+    completed_at: timestamp("completed_at", { withTimezone: true }),
+    created_at: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updated_at: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("bg_jobs_idempotency_key_idx").on(table.idempotency_key),
+    index("bg_jobs_org_id_idx").on(table.organization_id),
+    index("bg_jobs_type_status_idx").on(table.job_type, table.status),
+    index("bg_jobs_scheduled_idx").on(table.scheduled_for),
+    check(
+      "bg_jobs_status_check",
+      sql`${table.status} IN ('pending', 'running', 'completed', 'failed')`,
+    ),
+  ],
+);
+
+// =============================================================================
 // RELATIONS DEFINITIONS (Type-safe join navigations)
 // =============================================================================
 export const organizationsRelations = relations(organizations, ({ many }) => ({
@@ -367,6 +449,8 @@ export const organizationsRelations = relations(organizations, ({ many }) => ({
   storageFiles: many(storageFiles),
   auditLogs: many(auditLogs),
   invitations: many(invitations),
+  webhookEvents: many(webhookEvents),
+  backgroundJobs: many(backgroundJobs),
 }));
 
 export const usersRelations = relations(users, ({ many }) => ({

@@ -1,33 +1,25 @@
-import { NextResponse } from "next/server";
+import { z } from "zod";
 import { resolveAuthContext, teamService } from "@/modules/identity";
-import { AppError } from "@/common/errors";
+import { apiSuccess, apiError, parseJsonBody } from "@/common/utils";
+
+const changeRoleSchema = z.object({
+  newRole: z.enum(["owner", "admin", "member", "viewer"]),
+});
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ userId: string }> }) {
   try {
     const context = await resolveAuthContext(request.headers);
     const { userId } = await params;
-    const body = await request.json();
+    const body = await parseJsonBody(request, changeRoleSchema);
 
     const result = await teamService.changeMemberRole(context, {
       targetUserId: userId,
       newRole: body.newRole,
     });
 
-    return NextResponse.json({ success: true, data: result }, { status: 200 });
+    return apiSuccess(result);
   } catch (error) {
-    if (error instanceof AppError) {
-      return NextResponse.json(
-        { success: false, error: { code: error.errorCode, message: error.message } },
-        { status: error.statusCode },
-      );
-    }
-    return NextResponse.json(
-      {
-        success: false,
-        error: { code: "INTERNAL_ERROR", message: "An unexpected error occurred" },
-      },
-      { status: 500 },
-    );
+    return apiError(error);
   }
 }
 
@@ -40,20 +32,8 @@ export async function DELETE(
     const { userId } = await params;
 
     const result = await teamService.removeMember(context, userId);
-    return NextResponse.json({ success: true, data: result }, { status: 200 });
+    return apiSuccess(result);
   } catch (error) {
-    if (error instanceof AppError) {
-      return NextResponse.json(
-        { success: false, error: { code: error.errorCode, message: error.message } },
-        { status: error.statusCode },
-      );
-    }
-    return NextResponse.json(
-      {
-        success: false,
-        error: { code: "INTERNAL_ERROR", message: "An unexpected error occurred" },
-      },
-      { status: 500 },
-    );
+    return apiError(error);
   }
 }

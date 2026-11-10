@@ -1,29 +1,19 @@
-import { NextResponse } from "next/server";
+import { z } from "zod";
 import { teamService } from "@/modules/identity";
-import { AppError } from "@/common/errors";
+import { apiSuccess, apiError, parseJsonBody } from "@/common/utils";
+
+const acceptInviteSchema = z.object({
+  inviteToken: z.string().min(1, "inviteToken is required"),
+  acceptingUserId: z.string().uuid().optional(),
+  fullName: z.string().optional(),
+});
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const result = await teamService.acceptInvite({
-      inviteToken: body.inviteToken,
-      acceptingUserId: body.acceptingUserId,
-      fullName: body.fullName,
-    });
-    return NextResponse.json({ success: true, data: result }, { status: 200 });
+    const body = await parseJsonBody(request, acceptInviteSchema);
+    const result = await teamService.acceptInvite(body);
+    return apiSuccess(result);
   } catch (error) {
-    if (error instanceof AppError) {
-      return NextResponse.json(
-        { success: false, error: { code: error.errorCode, message: error.message } },
-        { status: error.statusCode },
-      );
-    }
-    return NextResponse.json(
-      {
-        success: false,
-        error: { code: "INTERNAL_ERROR", message: "An unexpected error occurred" },
-      },
-      { status: 500 },
-    );
+    return apiError(error);
   }
 }

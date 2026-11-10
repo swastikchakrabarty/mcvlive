@@ -4,6 +4,8 @@
 
 export * from "./types";
 export * from "./sales-service";
+export * from "./feature-gate";
+export * from "./webhook-service";
 
 export const salesModule = {
   name: "sales",

@@ -10,6 +10,8 @@ import {
   invoices,
   storageFiles,
   auditLogs,
+  webhookEvents,
+  backgroundJobs,
 } from "./schema";
 import crypto from "node:crypto";
 
@@ -17,6 +19,8 @@ export async function runSeed(customDb = getDb()) {
   console.log("Starting idempotent database seed for Morland Chambers Vector...");
 
   // 1. Clean existing seed records
+  await customDb.delete(backgroundJobs);
+  await customDb.delete(webhookEvents);
   await customDb.delete(auditLogs);
   await customDb.delete(storageFiles);
   await customDb.delete(invoices);
