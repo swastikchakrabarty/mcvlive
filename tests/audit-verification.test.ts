@@ -215,8 +215,10 @@ describe("Final Pre-Live QA, Security & Performance Audit", () => {
         "public/Morland Chambers Gold Emblem.png",
       );
       const logoPath = path.resolve(process.cwd(), "public/mcvlogo.png");
+      const emblemCopyPath = path.resolve(process.cwd(), "public/emblem.png");
       expect(fs.existsSync(emblemPath)).toBe(true);
       expect(fs.existsSync(logoPath)).toBe(true);
+      expect(fs.existsSync(emblemCopyPath)).toBe(true);
     });
   });
 });

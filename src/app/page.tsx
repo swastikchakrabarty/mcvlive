@@ -56,7 +56,7 @@ export default function LuxuryHomePage() {
             <Image
               src="/Morland Chambers Gold Emblem.png"
               alt="Morland Chambers Vector 3D Gold Emblem"
-              width={160}
+              width={218}
               height={120}
               priority
               className="h-20 sm:h-28 w-auto object-contain gold-glow-bloom mx-auto"
@@ -289,7 +289,7 @@ export default function LuxuryHomePage() {
               <Image
                 src="/Morland Chambers Gold Emblem.png"
                 alt="Morland Chambers Vector Gold Emblem"
-                width={80}
+                width={109}
                 height={60}
                 className="h-12 sm:h-16 w-auto object-contain gold-glow-bloom"
               />
