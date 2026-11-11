@@ -130,13 +130,50 @@ body {
   transform: scale(1.04);
 }
 
+/* Typography & Fade Animations */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes letter-expand {
+  0% {
+    letter-spacing: -0.05em;
+    opacity: 0.8;
+  }
+  100% {
+    letter-spacing: -0.03em;
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-letter-expand {
+  animation: letter-expand 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Dynamic subtle scroll-reactive ambient lighting mesh */
+.ambient-mesh-grid {
+  background-image: radial-gradient(rgba(212, 175, 55, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
 /* Deep Obsidian Glassmorphism with Glowing Gold Borders */
 .luxury-glass {
-  background: rgba(9, 9, 13, 0.78);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
-  border: 1px solid rgba(212, 175, 55, 0.35);
-  box-shadow: 0 0 40px rgba(212, 175, 55, 0.1);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.12);
 }
 
 .luxury-glass-gold {

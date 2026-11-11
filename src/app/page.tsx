@@ -18,6 +18,12 @@ export default function LuxuryHomePage() {
         aria-hidden="true"
       />
 
+      {/* Dynamic Subtle Scroll-Aware Ambient Lighting Mesh */}
+      <div
+        className="pointer-events-none absolute inset-0 ambient-mesh-grid opacity-30 z-0"
+        aria-hidden="true"
+      />
+
       {/* Floating Ambient Golden Particle Mesh */}
       <div
         className="pointer-events-none absolute inset-0 overflow-hidden z-0"
@@ -46,7 +52,7 @@ export default function LuxuryHomePage() {
           />
 
           {/* Centered 3D Metallic Gold Emblem with Subtle Hover Bloom */}
-          <div className="pb-1">
+          <div className="pb-1 animate-fade-in-up">
             <Image
               src="/mcvlogo.png"
               alt="Morland Chambers Vector 3D Gold Emblem"
@@ -60,7 +66,7 @@ export default function LuxuryHomePage() {
           {/* Powerful Headline with Crisp White & Shimmering Gold Gradient Highlights */}
           <h1
             id="hero-heading"
-            className="text-4xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-light sm:font-normal tracking-[-0.03em] sm:tracking-[-0.04em] text-white leading-[1.03] uppercase max-w-5xl drop-shadow-[0_2px_20px_rgba(0,0,0,0.9)]"
+            className="text-4xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-light sm:font-normal tracking-[-0.03em] sm:tracking-[-0.04em] text-white leading-[1.03] uppercase max-w-5xl drop-shadow-[0_2px_20px_rgba(0,0,0,0.9)] animate-letter-expand"
           >
             We build software, websites, and web applications for businesses to grow{" "}
             <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#D4AF37] via-[#FFF3D6] to-[#C5A880] bg-[length:200%_auto] animate-shimmer-gold bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(212,175,55,0.65)]">
@@ -69,7 +75,7 @@ export default function LuxuryHomePage() {
           </h1>
 
           {/* Refined Luxury Description */}
-          <p className="text-base sm:text-xl text-[#B0B0C4] font-light max-w-3xl mx-auto leading-relaxed tracking-wide">
+          <p className="text-base sm:text-xl text-[#B0B0C4] font-light max-w-3xl mx-auto leading-relaxed tracking-wide animate-fade-in-up">
             In an institutional landscape where seconds determine market capture, generic templates
             cost millions. We design and construct bespoke web platforms, conversion-optimized
             architectures, and high-throughput software systems engineered for exponential customer
@@ -129,7 +135,7 @@ export default function LuxuryHomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="backdrop-blur-2xl bg-[#09090D]/85 border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_35px_rgba(212,175,55,0.08)] hover:border-[#E5C158]/70 hover:shadow-[0_0_45px_rgba(212,175,55,0.22)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-black/60 border border-[#D4AF37]/40 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_40px_rgba(212,175,55,0.12)] hover:border-[#E5C158]/75 hover:shadow-[0_0_55px_rgba(212,175,55,0.25)] hover:-translate-y-1 transition-all duration-300">
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#E5C158] font-bold">
                 01 / Acquisition
               </span>
@@ -143,7 +149,7 @@ export default function LuxuryHomePage() {
             </div>
 
             {/* Card 2 */}
-            <div className="backdrop-blur-2xl bg-[#09090D]/85 border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_35px_rgba(212,175,55,0.08)] hover:border-[#E5C158]/70 hover:shadow-[0_0_45px_rgba(212,175,55,0.22)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-black/60 border border-[#D4AF37]/40 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_40px_rgba(212,175,55,0.12)] hover:border-[#E5C158]/75 hover:shadow-[0_0_55px_rgba(212,175,55,0.25)] hover:-translate-y-1 transition-all duration-300">
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#E5C158] font-bold">
                 02 / Conversion
               </span>
@@ -157,7 +163,7 @@ export default function LuxuryHomePage() {
             </div>
 
             {/* Card 3 */}
-            <div className="backdrop-blur-2xl bg-[#09090D]/85 border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_35px_rgba(212,175,55,0.08)] hover:border-[#E5C158]/70 hover:shadow-[0_0_45px_rgba(212,175,55,0.22)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-black/60 border border-[#D4AF37]/40 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_40px_rgba(212,175,55,0.12)] hover:border-[#E5C158]/75 hover:shadow-[0_0_55px_rgba(212,175,55,0.25)] hover:-translate-y-1 transition-all duration-300">
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#E5C158] font-bold">
                 03 / Retention
               </span>
@@ -194,7 +200,7 @@ export default function LuxuryHomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="backdrop-blur-2xl bg-[#09090D]/85 border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_35px_rgba(212,175,55,0.08)] hover:border-[#E5C158]/70 hover:shadow-[0_0_45px_rgba(212,175,55,0.22)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-black/60 border border-[#D4AF37]/40 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_40px_rgba(212,175,55,0.12)] hover:border-[#E5C158]/75 hover:shadow-[0_0_55px_rgba(212,175,55,0.25)] hover:-translate-y-1 transition-all duration-300">
               <h3 className="text-lg font-normal text-white uppercase tracking-wide">
                 Bespoke Corporate Websites
               </h3>
@@ -208,7 +214,7 @@ export default function LuxuryHomePage() {
               </div>
             </div>
 
-            <div className="backdrop-blur-2xl bg-[#09090D]/85 border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_35px_rgba(212,175,55,0.08)] hover:border-[#E5C158]/70 hover:shadow-[0_0_45px_rgba(212,175,55,0.22)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-black/60 border border-[#D4AF37]/40 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_40px_rgba(212,175,55,0.12)] hover:border-[#E5C158]/75 hover:shadow-[0_0_55px_rgba(212,175,55,0.25)] hover:-translate-y-1 transition-all duration-300">
               <h3 className="text-lg font-normal text-white uppercase tracking-wide">
                 Mission-Critical Web Applications
               </h3>
@@ -221,7 +227,7 @@ export default function LuxuryHomePage() {
               </div>
             </div>
 
-            <div className="backdrop-blur-2xl bg-[#09090D]/85 border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_35px_rgba(212,175,55,0.08)] hover:border-[#E5C158]/70 hover:shadow-[0_0_45px_rgba(212,175,55,0.22)] hover:-translate-y-1 transition-all duration-300">
+            <div className="backdrop-blur-2xl bg-black/60 border border-[#D4AF37]/40 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[0_0_40px_rgba(212,175,55,0.12)] hover:border-[#E5C158]/75 hover:shadow-[0_0_55px_rgba(212,175,55,0.25)] hover:-translate-y-1 transition-all duration-300">
               <h3 className="text-lg font-normal text-white uppercase tracking-wide">
                 Enterprise Vector Infrastructure
               </h3>

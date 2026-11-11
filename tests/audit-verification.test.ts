@@ -202,8 +202,21 @@ describe("Final Pre-Live QA, Security & Performance Audit", () => {
       expect(globalsContent).toContain("--luxury-gold: #d4af37;");
       expect(globalsContent).toContain("animate-shimmer-gold");
       expect(globalsContent).toContain("animate-pulse-glow");
+      expect(globalsContent).toContain("animate-letter-expand");
+      expect(globalsContent).toContain("animate-fade-in-up");
+      expect(globalsContent).toContain("ambient-mesh-grid");
       expect(globalsContent).toContain("gold-glow-bloom");
       expect(globalsContent).toContain("luxury-glass");
+    });
+
+    it("verifies gold emblem image assets exist in public folder", () => {
+      const emblemPath = path.resolve(
+        process.cwd(),
+        "public/Morland Chambers Gold Emblem.png",
+      );
+      const logoPath = path.resolve(process.cwd(), "public/mcvlogo.png");
+      expect(fs.existsSync(emblemPath)).toBe(true);
+      expect(fs.existsSync(logoPath)).toBe(true);
     });
   });
 });
