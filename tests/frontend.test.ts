@@ -399,6 +399,7 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
 
       const layoutPath = path.resolve(process.cwd(), "src/app/layout.tsx");
       const layoutContent = fs.readFileSync(layoutPath, "utf-8");
+      expect(layoutContent).toContain("mcvlogo.png");
       expect(layoutContent).toContain("Morland Chambers Gold Emblem.png");
       expect(layoutContent).toContain("icon:");
       expect(layoutContent).toContain("shortcut:");
@@ -406,6 +407,7 @@ describe("Layer 6: Frontend Design System & Component State Tests", () => {
 
       const navPath = path.resolve(process.cwd(), "src/components/luxury/luxury-nav.tsx");
       const navContent = fs.readFileSync(navPath, "utf-8");
+      expect(navContent).toContain("mcvlogo.png");
       expect(navContent).toContain("Morland Chambers Gold Emblem.png");
       expect(navContent).toContain('alt="Morland Chambers Vector Logo"');
     });

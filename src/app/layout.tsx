@@ -63,9 +63,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/Morland Chambers Gold Emblem.png",
-    shortcut: "/Morland Chambers Gold Emblem.png",
-    apple: "/Morland Chambers Gold Emblem.png",
+    icon: "/mcvlogo.png",
+    shortcut: "/mcvlogo.png",
+    apple: "/mcvlogo.png",
   },
 };
 
