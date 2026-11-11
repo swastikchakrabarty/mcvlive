@@ -168,7 +168,7 @@ describe("Final Pre-Live QA, Security & Performance Audit", () => {
       expect(layoutContent).toContain("openGraph:");
       expect(layoutContent).toContain("twitter:");
       expect(layoutContent).toContain("robots:");
-      expect(layoutContent).toContain("/mcvlogo.png");
+      expect(layoutContent).toContain("Morland Chambers Gold Emblem.png");
     });
   });
 
@@ -190,8 +190,8 @@ describe("Final Pre-Live QA, Security & Performance Audit", () => {
       // Next.js Image with width, height, and priority to achieve 0 Cumulative Layout Shift (CLS)
       expect(navContent).toContain("<Image");
       expect(navContent).toContain("priority");
-      expect(navContent).toContain("width={44}");
-      expect(navContent).toContain("height={34}");
+      expect(navContent).toContain("width={48}");
+      expect(navContent).toContain("height={48}");
     });
 
     it("verifies pitch-black obsidian theme tokens and metallic gold animations in globals.css", () => {

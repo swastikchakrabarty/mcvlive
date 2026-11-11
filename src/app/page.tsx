@@ -54,12 +54,12 @@ export default function LuxuryHomePage() {
           {/* Centered 3D Metallic Gold Emblem with Subtle Hover Bloom */}
           <div className="pb-1 animate-fade-in-up">
             <Image
-              src="/mcvlogo.png"
+              src="/Morland Chambers Gold Emblem.png"
               alt="Morland Chambers Vector 3D Gold Emblem"
-              width={90}
-              height={70}
+              width={160}
+              height={120}
               priority
-              className="h-16 sm:h-20 w-auto object-contain gold-glow-bloom mx-auto"
+              className="h-20 sm:h-28 w-auto object-contain gold-glow-bloom mx-auto"
             />
           </div>
 
@@ -287,11 +287,11 @@ export default function LuxuryHomePage() {
           <div className="max-w-4xl mx-auto text-center space-y-6">
             <div className="flex justify-center pb-2">
               <Image
-                src="/mcvlogo.png"
+                src="/Morland Chambers Gold Emblem.png"
                 alt="Morland Chambers Vector Gold Emblem"
-                width={56}
-                height={44}
-                className="h-10 sm:h-12 w-auto object-contain gold-glow-bloom"
+                width={80}
+                height={60}
+                className="h-12 sm:h-16 w-auto object-contain gold-glow-bloom"
               />
             </div>
 

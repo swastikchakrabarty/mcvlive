@@ -14,10 +14,10 @@ export function LuxuryNav() {
           className="flex items-center gap-2.5 sm:gap-3.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] rounded-sm p-1 min-w-0"
         >
           <Image
-            src="/mcvlogo.png"
+            src="/Morland Chambers Gold Emblem.png"
             alt="Morland Chambers Vector Logo"
-            width={44}
-            height={34}
+            width={48}
+            height={48}
             priority
             className="h-8 sm:h-9 w-auto object-contain gold-glow-bloom shrink-0"
           />

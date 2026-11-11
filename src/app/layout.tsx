@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: "Morland Chambers Vector",
     images: [
       {
-        url: "/mcvlogo.png",
+        url: "/Morland Chambers Gold Emblem.png",
         width: 1200,
         height: 630,
         alt: "Morland Chambers Vector Logo",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     title: "Morland Chambers Vector | Luxury Corporate Web Architectures & Software Systems",
     description:
       "We build software, websites, and web applications for businesses to grow so they never miss another customer.",
-    images: ["/mcvlogo.png"],
+    images: ["/Morland Chambers Gold Emblem.png"],
   },
   robots: {
     index: true,
@@ -63,9 +63,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/mcvlogo.png",
-    shortcut: "/mcvlogo.png",
-    apple: "/mcvlogo.png",
+    icon: "/Morland Chambers Gold Emblem.png",
+    shortcut: "/Morland Chambers Gold Emblem.png",
+    apple: "/Morland Chambers Gold Emblem.png",
   },
 };
 
