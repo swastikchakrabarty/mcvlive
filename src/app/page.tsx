@@ -7,6 +7,20 @@ import { LuxuryBillingTiers } from "@/components/luxury/billing-tiers";
 import { LuxuryContactForm } from "@/components/luxury/luxury-contact-form";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
+const HERO_WORDS = [
+  "We",
+  "build",
+  "software,",
+  "websites,",
+  "and",
+  "web",
+  "applications",
+  "for",
+  "businesses",
+  "to",
+  "grow",
+];
+
 export default function LuxuryHomePage() {
   const [selectedTier, setSelectedTier] = useState<string>("ecommerce_store");
 
@@ -51,31 +65,36 @@ export default function LuxuryHomePage() {
             aria-hidden="true"
           />
 
-          {/* Centered 3D Metallic Gold Emblem with Subtle Hover Bloom */}
-          <div className="pb-1 animate-fade-in-up">
-            <Image
-              src="/Morland Chambers Gold Emblem.png"
-              alt="Morland Chambers Vector 3D Gold Emblem"
-              width={218}
-              height={120}
-              priority
-              className="h-20 sm:h-28 w-auto object-contain gold-glow-bloom mx-auto"
-            />
-          </div>
-
-          {/* Powerful Headline with Crisp White & Shimmering Gold Gradient Highlights */}
+          {/* Powerful Headline with Staggered Entrance Motion & Shimmering Gold Reveal */}
           <h1
             id="hero-heading"
-            className="text-4xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-light sm:font-normal tracking-[-0.03em] sm:tracking-[-0.04em] text-white leading-[1.03] uppercase max-w-5xl drop-shadow-[0_2px_20px_rgba(0,0,0,0.9)] animate-letter-expand"
+            aria-label="We build software, websites, and web applications for businesses to grow so they never miss another customer."
+            className="text-4xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] font-light sm:font-normal tracking-[-0.03em] sm:tracking-[-0.04em] text-white leading-[1.03] uppercase max-w-5xl drop-shadow-[0_2px_20px_rgba(0,0,0,0.9)]"
           >
-            We build software, websites, and web applications for businesses to grow{" "}
-            <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#D4AF37] via-[#FFF3D6] to-[#C5A880] bg-[length:200%_auto] animate-shimmer-gold bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(212,175,55,0.65)]">
-              so they never miss another customer.
+            {HERO_WORDS.map((word, idx) => (
+              <span
+                key={word}
+                className="inline-block mr-[0.24em] sm:mr-[0.28em] animate-word-reveal"
+                style={{ animationDelay: `${100 + idx * 70}ms` }}
+              >
+                {word}
+              </span>
+            ))}
+            <span
+              className="inline-block animate-gold-reveal"
+              style={{ animationDelay: `${100 + HERO_WORDS.length * 70 + 80}ms` }}
+            >
+              <span className="font-serif italic font-normal tracking-normal bg-gradient-to-r from-[#D4AF37] via-[#FFF3D6] to-[#C5A880] bg-[length:200%_auto] animate-shimmer-gold animate-gold-pulse bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(212,175,55,0.65)]">
+                so they never miss another customer.
+              </span>
             </span>
           </h1>
 
           {/* Refined Luxury Description */}
-          <p className="text-base sm:text-xl text-[#B0B0C4] font-light max-w-3xl mx-auto leading-relaxed tracking-wide animate-fade-in-up">
+          <p
+            className="text-base sm:text-xl text-[#B0B0C4] font-light max-w-3xl mx-auto leading-relaxed tracking-wide animate-fade-in-up"
+            style={{ animationDelay: "1150ms" }}
+          >
             In an institutional landscape where seconds determine market capture, generic templates
             cost millions. We design and construct bespoke web platforms, conversion-optimized
             architectures, and high-throughput software systems engineered for exponential customer
@@ -83,7 +102,10 @@ export default function LuxuryHomePage() {
           </p>
 
           {/* Dual Action Triggers */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-3">
+          <div
+            className="flex flex-wrap items-center justify-center gap-4 pt-3 animate-fade-in-up"
+            style={{ animationDelay: "1300ms" }}
+          >
             <a
               href="#contact"
               className="inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#FFF3D6] to-[#D4AF37] px-8 py-4 text-xs uppercase font-bold tracking-[0.24em] text-black shadow-[0_0_35px_rgba(212,175,55,0.4)] hover:shadow-[0_0_55px_rgba(229,193,88,0.7)] hover:scale-[1.02] border border-[#FFF3D6]/80 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E5C158]"
@@ -101,7 +123,10 @@ export default function LuxuryHomePage() {
           </div>
 
           {/* Credibility Ribbon */}
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-[10px] sm:text-[11px] uppercase font-mono tracking-[0.2em] sm:tracking-[0.24em] text-[#D4AF37]/90">
+          <div
+            className="pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-6 lg:gap-8 text-[10px] sm:text-[11px] uppercase font-mono tracking-[0.2em] sm:tracking-[0.24em] text-[#D4AF37]/90 animate-fade-in-up"
+            style={{ animationDelay: "1450ms" }}
+          >
             <span>Zero Cold-Starts</span>
             <span>·</span>
             <span>Sub-5ms Execution</span>

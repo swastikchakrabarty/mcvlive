@@ -154,11 +154,69 @@ body {
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fade-in-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-letter-expand {
   animation: letter-expand 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hero Headline Staggered Word Reveal */
+@keyframes hero-word-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    filter: blur(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-word-reveal {
+  opacity: 0;
+  animation: hero-word-reveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity, filter;
+}
+
+/* Metallic Gold Accent Reveal */
+@keyframes hero-gold-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scale(0.96);
+    filter: blur(8px) brightness(1.6);
+  }
+  60% {
+    filter: drop-shadow(0 0 35px rgba(229, 193, 88, 0.9));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.65));
+  }
+}
+
+.animate-gold-reveal {
+  opacity: 0;
+  animation: hero-gold-reveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity, filter;
+}
+
+/* Metallic Gold Text Gentle Pulse & Halo Sweep */
+@keyframes gold-pulse-sweep {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 50px rgba(229, 193, 88, 0.85)) drop-shadow(0 0 70px rgba(212, 175, 55, 0.35));
+  }
+}
+
+.animate-gold-pulse {
+  animation: gold-pulse-sweep 6s ease-in-out infinite;
 }
 
 /* Dynamic subtle scroll-reactive ambient lighting mesh */
@@ -230,4 +288,21 @@ nextjs-portal,
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-word-reveal,
+  .animate-gold-reveal,
+  .animate-gold-pulse,
+  .animate-fade-in-up,
+  .animate-letter-expand,
+  .animate-shimmer-gold,
+  .animate-pulse-glow,
+  .animate-particle-1,
+  .animate-particle-2 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
 }
